@@ -7,6 +7,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
 
+/**
+ * @author Onni
+ * @version 8.3.2022
+ *
+ */
 public class TreenisovellusMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
@@ -21,6 +26,9 @@ public class TreenisovellusMain extends Application {
 		}
 	}
 	
+	/**
+	 * @param args Ei käytössä
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
