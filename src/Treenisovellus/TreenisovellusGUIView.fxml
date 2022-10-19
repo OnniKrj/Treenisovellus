@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.TreenisovellusGUIController">
    <top>
       <VBox alignment="TOP_CENTER" prefHeight="139.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -21,12 +21,12 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Muokkaa">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaSuoritusta" text="Muokkaa suoritusta" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Apua">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleVersio" text="Versio" />
                   </items>
                 </Menu>
               </menus>
@@ -41,12 +41,12 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Lisää uusi suoritus">
+                  <Button mnemonicParsing="false" onAction="#handleUusiSuoritus" text="Lisää uusi suoritus">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Lisää uusi liike">
+                  <Button mnemonicParsing="false" onAction="#handleUusiLiike" text="Lisää uusi liike">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
