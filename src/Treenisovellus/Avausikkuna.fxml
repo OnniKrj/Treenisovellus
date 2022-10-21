@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane prefHeight="369.0" prefWidth="475.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<BorderPane prefHeight="369.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+			fx:controller="AvausikkunaController">
    <top>
       <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -46,7 +46,7 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="149.0" text="Avaa sovellus">
+            <Button mnemonicParsing="false" onAction="#handleAvaaSovellus" prefHeight="55.0" prefWidth="149.0" text="Avaa sovellus">
                <font>
                   <Font size="20.0" />
                </font>

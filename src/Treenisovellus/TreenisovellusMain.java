@@ -10,7 +10,8 @@ import javafx.fxml.FXMLLoader;
 /**
  * @author Onni
  * @version 7.10.2022
- *
+ * 
+ * Treenisovelluksen käynnistysohjelma.
  */
 public class TreenisovellusMain extends Application {
     @Override
