@@ -2,6 +2,7 @@ package Treenisovellus;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 /**
@@ -13,11 +14,11 @@ import javafx.fxml.FXML;
 public class TreenisovellusGUIController {
 
     @FXML void handleUusiLiike() {
-        Dialogs.showMessageDialog("Viel‰ ei osata lis‰t‰ treeniliikkeit‰");
+        uusiLiike();
     }
 
     @FXML void handleUusiSuoritus() {
-        Dialogs.showMessageDialog("Viel‰ ei osata lis‰t‰ suorituksia");
+        uusiSuoritus();
     }
     
     @FXML void handleVersio() {
@@ -25,17 +26,16 @@ public class TreenisovellusGUIController {
     }
     
     @FXML void handleMuokkaaSuoritusta() {
-        ModalController.showModal(TreenisovellusGUIController.class.getResource("Suoritukset.fxml"),
-                "Muokkaa", null, "");
+        muokkaaSuoritusta();
         
     }
     
     @FXML void handleAvaaSovellus() {
-        Dialogs.showMessageDialog("Sovellus ei aukea t‰st‰ viel‰");
+        avaaSovellus();
     }
     
     @FXML void handlePoistuEtusivulta() {
-        Dialogs.showMessageDialog("Viel‰ ei osata poistua t‰st‰");
+        suljeSovellus();
     }
     
     //================================================================================
@@ -52,6 +52,46 @@ public class TreenisovellusGUIController {
      */
     public void naytaVersio() {
         Dialogs.showMessageDialog("Viel‰ ei osata katsoa versiota");
+        
     }
 
+    /**
+     * N‰ytet‰‰n ikkuna uuden suoritusten lis‰‰mist‰ varten.
+     */
+    public void uusiSuoritus() {
+        ModalController.showModal(TreenisovellusGUIController.class.getResource("UusiSuoritus.fxml"),
+                "Lis‰‰ suoritus", null, "");
+    }
+    
+    /**
+     *  N‰ytet‰‰n suoritusten muokkaus ikkuna
+     */
+    public void muokkaaSuoritusta() {
+        ModalController.showModal(TreenisovellusGUIController.class.getResource("Suoritukset.fxml"),
+                "Muokkaa", null, "");
+    }
+    
+    /**
+     * N‰ytet‰‰n uuden liikkeen lis‰ysikkuna
+     */
+    public void uusiLiike() {
+        ModalController.showModal(TreenisovellusGUIController.class.getResource("UusiLiike.fxml"),
+                "Lis‰‰ liike", null, "");
+    }
+    
+    /**
+     * Suljetaan koko sovellus
+     */
+    public void suljeSovellus() {
+        Platform.exit();
+        
+        //Dialogs.showMessageDialog("Viel‰ ei pysty sulkemaan t‰st‰");
+    }
+    
+    /**
+     * Siirryt‰‰n p‰‰n‰kym‰‰n
+     */
+    public void avaaSovellus() {
+        Dialogs.showMessageDialog("Sovellus ei aukea t‰st‰ viel‰");
+    }
 }
