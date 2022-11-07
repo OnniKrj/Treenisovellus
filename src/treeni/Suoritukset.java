@@ -92,7 +92,6 @@ public class Suoritukset {
       try {
         suoritukset.lisaa(treeni1);
         suoritukset.lisaa(treeni2);
-
         
         System.out.println("==========Suoritukset testi===========");
         
