@@ -36,7 +36,7 @@ public class Suoritus {
         out.println("Liikkeen tunnus: " + liikeNro);
         out.println("Sarjojen m‰‰r‰: " + sarjaMaara);
         out.println("Toistojen m‰‰r‰: " + toistoMaara);
-        out.println("Sarja paino: " + paino);
+        out.println("Sarja paino: " + paino + "kg");
         out.println("P‰iv‰m‰‰r‰: " + pvm + "\n");
     }
     
@@ -67,6 +67,20 @@ public class Suoritus {
     public int getTreeniNro() {
         return treeniNro;
     }
+    
+    
+    /**
+     * Apumetodi testiarvoilla t‰ytt‰mist‰ varten
+     * TODO: Poista kun kaikki toimii
+     */
+    public void taytaTreeniTiedoilla() {
+        
+        liikeNro = 1;
+        sarjaMaara = 3;
+        toistoMaara = 8;
+        paino = 60;
+        pvm = "1.10.2022";
+    }
 
     /**
      * @param args Ei k‰ytˆss‰
@@ -81,8 +95,11 @@ public class Suoritus {
         treeni1.tulosta(System.out);
         treeni2.tulosta(System.out);
         
-        //treeni1.taytaTreeniTiedoilla();
-        //treeni2.taytaTreeniTiedoilla();
+        treeni1.taytaTreeniTiedoilla();
+        treeni2.taytaTreeniTiedoilla();
+        
+        treeni1.tulosta(System.out);
+        treeni2.tulosta(System.out);
     
     }
 
