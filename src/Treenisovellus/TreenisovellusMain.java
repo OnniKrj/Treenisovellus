@@ -2,6 +2,7 @@ package Treenisovellus;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import treeni.Treeni;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +20,16 @@ public class TreenisovellusMain extends Application {
         try {
             FXMLLoader ldr = new FXMLLoader(getClass().getResource("TreenisovellusGUIView.fxml"));
             final Pane root = ldr.load();
-            //final TreenisovellusGUIController treenisovellusCtrl = (TreenisovellusGUIController) ldr.getController();
+            final TreenisovellusGUIController treeniCtrl = (TreenisovellusGUIController) ldr.getController();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("treenisovellus.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Treenisovellus");
             primaryStage.show();
+            
+            Treeni treeni = new Treeni();
+            treeniCtrl.setTreeni(treeni);
+            
         } catch(Exception e) {
             e.printStackTrace();
         }

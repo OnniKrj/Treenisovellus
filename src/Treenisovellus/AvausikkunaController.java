@@ -10,6 +10,16 @@ import javafx.fxml.FXML;
  *
  */
 public class AvausikkunaController {
-        //TODO
-        //Lis‰‰ metodit
+
+    
+    @FXML void handleAvaaSovellus() {
+        avaaSovellus();
+    }
+    
+    //===============================================================
+
+    private void avaaSovellus() {
+        // TODO Auto-generated method stub
+        
+    }
 }
