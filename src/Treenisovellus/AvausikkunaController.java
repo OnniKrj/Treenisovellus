@@ -1,6 +1,6 @@
 package Treenisovellus;
 
-import fi.jyu.mit.fxgui.Dialogs;
+
 import fi.jyu.mit.fxgui.ModalController;
 import javafx.fxml.FXML;
 

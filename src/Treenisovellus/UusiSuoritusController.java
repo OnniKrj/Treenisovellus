@@ -44,6 +44,9 @@ public class UusiSuoritusController implements ModalControllerInterface<String> 
     
 
 
+    /**
+     * Väliaikainen toteutus tallenna -toiminnolle
+     */
     public void tallenna() {
         Dialogs.showMessageDialog("Vielä ei osata tallentaa");
     }
