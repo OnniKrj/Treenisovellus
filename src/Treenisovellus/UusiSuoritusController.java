@@ -1,11 +1,18 @@
 package Treenisovellus;
 
 import java.awt.Dialog;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ListChooser;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.stage.Stage;
+import treeni.SailoException;
+import treeni.Suoritus;
+import treeni.Treeni;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 
@@ -14,7 +21,8 @@ import fi.jyu.mit.fxgui.ModalControllerInterface;
  * @version 24.10.2022
  *
  */
-public class UusiSuoritusController implements ModalControllerInterface<String> {
+public class UusiSuoritusController implements ModalControllerInterface<String>, Initializable {
+    
     
     @FXML void handleTallenna() {
         tallenna();
@@ -23,6 +31,8 @@ public class UusiSuoritusController implements ModalControllerInterface<String> 
  
     
     //==============================================
+    
+       
 
     @Override
     public String getResult() {
@@ -50,5 +60,18 @@ public class UusiSuoritusController implements ModalControllerInterface<String> 
     public void tallenna() {
         Dialogs.showMessageDialog("Vielä ei osata tallentaa");
     }
+
+
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        //
+        
+    }
     
-}
+
+                
+    }
+    
+    
+    

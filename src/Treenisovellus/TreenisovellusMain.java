@@ -20,7 +20,7 @@ public class TreenisovellusMain extends Application {
         try {
             FXMLLoader ldr = new FXMLLoader(getClass().getResource("TreenisovellusGUIView.fxml"));
             final Pane root = ldr.load();
-            final TreenisovellusGUIController treeniCtrl = (TreenisovellusGUIController) ldr.getController();
+            final TreenisovellusGUIController treeniCtrl = (TreenisovellusGUIController) ldr.getController();;
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("treenisovellus.css").toExternalForm());
             primaryStage.setScene(scene);
@@ -29,6 +29,7 @@ public class TreenisovellusMain extends Application {
             
             Treeni treeni = new Treeni();
             treeniCtrl.setTreeni(treeni);
+
             
         } catch(Exception e) {
             e.printStackTrace();

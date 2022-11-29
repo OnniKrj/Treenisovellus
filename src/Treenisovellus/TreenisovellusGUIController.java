@@ -25,8 +25,9 @@ public class TreenisovellusGUIController {
     }
 
     @FXML void handleUusiSuoritus() {
-        ModalController.showModal(TreenisovellusGUIController.class.getResource("UusiSuoritus.fxml"),
-                "Lis‰‰ suoritus", null, "");
+        
+        SuorituksetController.avaaSuoritukset(null, treeni);
+       
     }
     
     @FXML void handleVersio() {
@@ -35,7 +36,7 @@ public class TreenisovellusGUIController {
     
     @FXML void handleMuokkaaSuoritusta() {
         ModalController.showModal(TreenisovellusGUIController.class.getResource("Suoritukset.fxml"),
-                "Muokkaa", null, "");
+                "Muokkaa suoritusta", null, "");
         
     }
     
@@ -45,15 +46,18 @@ public class TreenisovellusGUIController {
     }
     
     //================================================================================
-    
+        
     private Treeni treeni;
     
     /**
-     * Avataan suoritusten muokkaus ikkuna.
+     * @param treeni todo
      */
-    /*public void muokkaaSuoritusta() {
-        Dialogs.showMessageDialog("Ei pysty muokkaamaan aiempia suorituksia viel‰");
-    }*/
+    public void setTreeni(Treeni treeni) {
+        this.treeni = treeni;
+        
+    }
+    
+    
     
     /**
      * N‰ytet‰‰n sovelluksen tiedot.
@@ -62,44 +66,13 @@ public class TreenisovellusGUIController {
         Dialogs.showMessageDialog("Viel‰ ei osata katsoa versiota");
         
     }
-    //TODO: V‰‰r‰ss‰ kontrollerissa? LUENTO 14! Pit‰‰ siirt‰‰ Suoritukset controlleriin
-    private void hae(int treeniNro) {
-        chooserSuoritukset.clear();
-        
-        int index = 0;
-        for (int i = 0; i < treeni.getSuorituksia(); i++) {
-            Suoritus suoritus = treeni.annaSuoritus(i);
-            if (suoritus.getTreeniNro() == treeniNro) index = i;
-            chooserSuoritukset.add("" + suoritus.getTreeniNro(), suoritus);
-        }
-        chooserSuoritukset.setSelectedIndex(index);
-    }
-    
-
-    /**
-     * N‰ytet‰‰n ikkuna uuden suoritusten lis‰‰mist‰ varten.
-     * TODO: V‰‰r‰ss‰ controllerissa? LUENTO 14 ASIAA
-     */
-    public void uusiSuoritus() {
-       
-        Suoritus uusi = new Suoritus();
-        uusi.kirjaa();
-        uusi.taytaTreeniTiedoilla();
-        try {
-            treeni.lisaa(uusi);
-        } catch (SailoException e) {
-            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
-        }
-        hae(uusi.getTreeniNro());
-                
-    }
     
     
     /**
      *  N‰ytet‰‰n suoritusten muokkaus ikkuna
      */
     public void muokkaaSuoritusta() {
-        //
+        Dialogs.showMessageDialog("Ei pysty muokkaamaan aiempia suorituksia viel‰");
     }
     
     
@@ -128,11 +101,4 @@ public class TreenisovellusGUIController {
         Dialogs.showMessageDialog("Sovellus ei aukea t‰st‰ viel‰");
     }
     
-    
-    /**
-     * @param treeni Treeni jota k‰ytet‰‰n
-     */
-    public void setTreeni(Treeni treeni) {
-        this.treeni = treeni;
-    }
 }
