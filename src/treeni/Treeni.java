@@ -3,6 +3,8 @@
  */
 package treeni;
 
+import java.util.List;
+
 /**
  * @author Onni
  * @version 7.11.2022
@@ -11,6 +13,7 @@ package treeni;
 public class Treeni {
     
     private Suoritukset suoritukset = new Suoritukset();
+    private Liikkeet liikkeet = new Liikkeet();
     
     
     /**
@@ -20,6 +23,15 @@ public class Treeni {
      */
     public void lisaa(Suoritus suoritus) throws SailoException {
         suoritukset.lisaa(suoritus);
+    }
+    
+    
+    /**
+     * Lisätään uusi liike
+     * @param liike Lisättävä liike
+     */
+    public void lisaa(Liike liike) {
+        liikkeet.lisaa(liike);
     }
     
     /**
@@ -37,6 +49,15 @@ public class Treeni {
      */
     public Suoritus annaSuoritus(int i) {
         return suoritukset.anna(i);
+    }
+    
+    /**
+     * @param suoritus Suoritus jolle suorituksia haetaan
+     * @return Tietorakenne, jossa viitteet löydettyihin suorituksiin
+     * @example
+     */
+    public List<Liike> annaLiikkeet(Suoritus suoritus) {
+        return liikkeet.annaLiikkeet(suoritus.getTreeniNro());
     }
     
 

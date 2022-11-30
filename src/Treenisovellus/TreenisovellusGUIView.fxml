@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import fi.jyu.mit.fxgui.ListChooser?>
+<?import fi.jyu.mit.fxgui.ScrollBorder?>
 <?import fi.jyu.mit.fxgui.StringGrid?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -13,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.TreenisovellusGUIController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.TreenisovellusGUIController">
    <top>
-      <VBox alignment="TOP_CENTER" prefHeight="139.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
             <MenuBar>
               <menus>
@@ -39,7 +41,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER">
                <children>
                   <Button mnemonicParsing="false" onAction="#handleUusiSuoritus" text="Suoritukset">
                      <HBox.margin>
@@ -62,21 +64,40 @@
       </VBox>
    </top>
    <center>
-      <ScrollPane BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="panelSuoritus" BorderPane.alignment="CENTER">
          <content>
-            <StringGrid prefHeight="260.0" prefWidth="619.0" rivit="Päivämäärä|Liike|Sarjat|Toistot|Paino (kg)&#10;1.10.2022|Pystypunnerrus|3|8|40&#10;1.10.2022|Kyykky|4|6|85&#10;1.10.2022|Dippi|3|10|0&#10;1.10.2022|Vinopenkki kp|3|8|50&#10;1.10.2022|Askelkyykky|2|20|32&#10;29.9.2022|Maastaveto|3|8|80&#10;29.9.2022|Leuanveto|3|10|0&#10;29.9.2022|Alatalja|3|8|50&#10;29.9.2022|Ylätalja|3|8|60" />
+            <StringGrid rivit="Päivämäärä|Liike|Sarjat|Toistot|Paino (kg)&#10;1.10.2022|Pystypunnerrus|3|8|40&#10;1.10.2022|Kyykky|4|6|85&#10;1.10.2022|Dippi|3|10|0&#10;1.10.2022|Vinopenkki kp|3|8|50&#10;1.10.2022|Askelkyykky|2|20|32&#10;29.9.2022|Maastaveto|3|8|80&#10;29.9.2022|Leuanveto|3|10|0&#10;29.9.2022|Alatalja|3|8|50&#10;29.9.2022|Ylätalja|3|8|60" />
          </content>
       </ScrollPane>
    </center>
    <bottom>
       <VBox alignment="BOTTOM_RIGHT" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="BOTTOM_RIGHT">
          <children>
-            <Button mnemonicParsing="false" onAction="#handlePoistuEtusivulta" text="Poistu">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handlePaivitaLista" text="Päivitä">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handlePoistuEtusivulta" text="Poistu">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
-            </Button>
+            </HBox>
          </children>
       </VBox>
    </bottom>
+   <left>
+      <ScrollBorder BorderPane.alignment="CENTER">
+         <children>
+            <ListChooser fx:id="chooserSuoritukset" prefWidth="150.0" rivit="Treeni 013&#10;Treeni 014&#10;Treeni 015&#10;Treeni 016&#10;" />
+         </children>
+      </ScrollBorder>
+   </left>
 </BorderPane>
