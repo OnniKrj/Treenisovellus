@@ -60,6 +60,16 @@ public class Treeni {
         return liikkeet.annaLiikkeet(suoritus.getTreeniNro());
     }
     
+    /**
+     * @param hakemisto Hakemisto
+     * @throws SailoException Ilmoitus, jos virhe
+     */
+    public void lueTiedostosta(String hakemisto) throws SailoException {
+        //suoritukset.lueTiedostosta(hakemisto);
+        liikkeet.lueTiedostosta(hakemisto);
+    }
+
+    
 
     /**
      * @param args Ei käytössä

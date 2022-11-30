@@ -1,6 +1,7 @@
 package Treenisovellus;
 
 import java.io.PrintStream;
+import java.util.List;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
+import treeni.Liike;
 import treeni.SailoException;
 import treeni.Suoritus;
 import treeni.Treeni;
@@ -59,6 +61,7 @@ public class TreenisovellusGUIController {
     //================================================================================
         
     private Treeni treeni;
+    private Suoritus suoritusKohdalla;
     private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
     
     /**
@@ -94,15 +97,48 @@ public class TreenisovellusGUIController {
         hae(uusi.getTreeniNro());
     }
     
+    
+
+    
     private void naytaSuoritus() {
-        Suoritus suoritusKohdalla = chooserSuoritukset.getSelectedObject();
+        suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
         
         areaSuoritus.setText("");
         try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaSuoritus)) {
             suoritusKohdalla.tulosta(os);
+            List<Liike> liikkeet = treeni.annaLiikkeet(suoritusKohdalla);
+            for (Liike liike : liikkeet)
+                liike.tulosta(os);
         }
     }
+    
+    /**
+     * Uuden liikkeen lis‰‰minen
+     */
+    public void uusiLiike() {
+        if (suoritusKohdalla == null) return;
+        Liike liike = new Liike();
+        liike.kirjaa();
+        liike.TaytaLiikeTiedoilla(suoritusKohdalla.getTreeniNro());
+        treeni.lisaa(liike);
+        hae(suoritusKohdalla.getTreeniNro());
+        
+    }
+    
+    /**
+     * @param os Tulostusvirta
+     * @param suoritus Tulostettava suoritus
+     */
+    public void tulosta(PrintStream os, final Suoritus suoritus) {
+        os.println("---------------------------------------");
+        suoritus.tulosta(os);
+        os.println("---------------------------------------");
+        List<Liike> liikkeet = treeni.annaLiikkeet(suoritus);
+        for (Liike liike : liikkeet)
+            liike.tulosta(os);
+    }
+    
     
     private void alusta() {
         panelSuoritus.setContent(areaSuoritus);
@@ -121,9 +157,13 @@ public class TreenisovellusGUIController {
         
     }
     
+    /**
+     * Nappi jolla p‰ivitet‰‰n p‰‰sivun n‰kym‰ // TODO: muuta oikeaksi p‰ivitys -napiksi, nyt se virheellisesti lis‰‰ uusia toteutuksia
+     */
     public void paivita() {
         alusta();
-        naytaSuoritus();
+        uusiSuoritus();
+        uusiLiike();
     }
     
     
@@ -136,14 +176,7 @@ public class TreenisovellusGUIController {
         //Dialogs.showMessageDialog("Ei pysty muokkaamaan aiempia suorituksia viel‰");
     }
     
-    
-    /**
-     * N‰ytet‰‰n uuden liikkeen lis‰ysikkuna
-     */
-    public void uusiLiike() {
-        //
-    }
-    
+
     
     /**
      * Suljetaan koko sovellus

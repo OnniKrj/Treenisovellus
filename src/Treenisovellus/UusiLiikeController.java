@@ -37,7 +37,8 @@ public class UusiLiikeController implements  ModalControllerInterface<Treeni>, I
     @FXML private ListChooser<Liike> chooserLiikkeet;
     
     private void tallenna() {
-        Dialogs.showMessageDialog("Vielä ei osata tallentaa");
+        //Dialogs.showMessageDialog("Vielä ei osata tallentaa");
+        
     }
     
 

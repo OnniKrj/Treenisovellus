@@ -1,5 +1,6 @@
 package treeni;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
@@ -46,6 +47,9 @@ public class Liike {
         return liikeNimi;
     }
     
+    /**
+     * @return Treenin numero
+     */
     public int getTreeniNro() {
         return treeniNro;
     }
@@ -55,7 +59,7 @@ public class Liike {
      * @param nro Viite liikkeeseen
      */
     public void TaytaLiikeTiedoilla(int nro) {
-        liikeNro = nro;
+        treeniNro = nro;
         liikeNimi = "Pystypunnerrus";
         
         
@@ -63,6 +67,7 @@ public class Liike {
     
     /**
      * @return T‰ytet‰‰n
+     * 
      * <pre name="test">
      * Liike liike1 = new Liike();
      * liike1.getLiikeNro() === 0;
@@ -84,8 +89,15 @@ public class Liike {
      * @param out Tulostettava tietovirta
      */
     public void tulosta(PrintStream out) {
-        out.println("Liikkeen nimi: " + liikeNimi);
-        out.println("Liikkeen tunnus: " + liikeNro);
+        out.println(liikeNimi + " " + liikeNro);
+        
+    }
+    
+    /**
+     * @param os Tietovirta johon tulostetaan
+     */
+    public void tulosta(OutputStream os) {
+        tulosta(new PrintStream(os));
     }
     
     

@@ -49,11 +49,12 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     //==============================================================================
 
     private Treeni treeni;
+    private Suoritus suoritusKohdalla;
     private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
     
     
     private void naytaSuoritus() {
-        Suoritus suoritusKohdalla = chooserSuoritukset.getSelectedObject();
+        suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
         
         areaSuoritus.setText("");
