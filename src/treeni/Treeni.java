@@ -3,6 +3,7 @@
  */
 package treeni;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -14,6 +15,9 @@ public class Treeni {
     
     private Suoritukset suoritukset = new Suoritukset();
     private Liikkeet liikkeet = new Liikkeet();
+    
+    
+    private String hakemisto = "treeni";
     
     
     /**
@@ -61,14 +65,40 @@ public class Treeni {
     }
     
     /**
-     * @param hakemisto Hakemisto
+     * @param nimi Hakemisto
      * @throws SailoException Ilmoitus, jos virhe
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-        //suoritukset.lueTiedostosta(hakemisto);
-        liikkeet.lueTiedostosta(hakemisto);
+    public void lueTiedostosta(String nimi) throws SailoException {
+        File dir = new File(nimi);
+        dir.mkdir();
+        suoritukset = new Suoritukset();
+        liikkeet = new Liikkeet();
+        
+        hakemisto = nimi;
+        suoritukset.lueTiedostosta(nimi);
+        liikkeet.lueTiedostosta(nimi);
     }
 
+    
+    /**
+     * Tallennetaan treenin tiedot tiedostoon
+     * @throws SailoException Virhe jos tallentamisessa on ongelmia
+     */
+    public void tallenna() throws SailoException {
+        String virhe = "";
+        try {
+            suoritukset.tallenna(hakemisto);
+        } catch (SailoException ex) {
+            virhe = ex.getMessage();
+        }
+        
+        try {
+            liikkeet.tallenna(hakemisto);
+        } catch (SailoException ex) {
+            virhe += ex.getMessage();
+        }
+        if (!"".equals(virhe)) throw new SailoException(virhe);
+    }
     
 
     /**
@@ -76,6 +106,12 @@ public class Treeni {
      */
     public static void main(String[] args) {
         Treeni treeni = new Treeni();
+        
+        try {
+            treeni.lueTiedostosta("koetreeni");
+        } catch (SailoException ex) {
+            System.out.println(ex.getMessage());
+        }
         
         Suoritus treeni1 = new Suoritus();
         Suoritus treeni2 = new Suoritus();
@@ -87,15 +123,20 @@ public class Treeni {
         try {
             treeni.lisaa(treeni1);
             treeni.lisaa(treeni2);
+            
+            for (int i = 0; i < treeni.getSuorituksia(); i++) {
+                Suoritus suoritus = treeni.annaSuoritus(i);
+                suoritus.tulosta(System.out);
+            }
+            
+            treeni.tallenna();
+            
         } catch (SailoException e) {
             System.err.println(e.getMessage());
         }
         
         
-        for (int i = 0; i < treeni.getSuorituksia(); i++) {
-            Suoritus suoritus = treeni.annaSuoritus(i);
-            suoritus.tulosta(System.out);
-        }
+
         
     }
 

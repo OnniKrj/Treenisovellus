@@ -5,6 +5,8 @@ package treeni;
 
 import java.io.PrintStream;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * @author Onni
  * @version 7.11.2022
@@ -70,6 +72,17 @@ public class Suoritus {
     
     
     /**
+     * Seuraava treeninumero on aina tämänhetkistä suurempi
+     * @param nr Asetettava treeninumero
+     */
+    private void setTreeniNro(int nr) {
+        treeniNro = nr;
+        if ( treeniNro >= seuraavaNro ) seuraavaNro = treeniNro + 1;
+    }
+
+    
+    
+    /**
      * Apumetodi testiarvoilla täyttämistä varten
      * TODO: Poista kun kaikki toimii
      */
@@ -100,6 +113,33 @@ public class Suoritus {
                 paino + "|" +
                 pvm;
     }
+    
+    /**
+     * @param rivi Rivi jolta tiedot otetaan
+     * @example
+     * @example
+     * <pre name="test">
+     *  Suoritus suoritus = new Suoritus();
+     *  suoritus.parse(" 3 |  1  |  3");
+     *  suoritus.getTreeniNro() === 3;
+     *  suoritus.toString().startsWith("3|1|3|") === true;
+     *  
+     *  suoritus.kirjaa();
+     *  int n = suoritus.getTreeniNro();
+     *  suoritus.parse(""+(n+20));
+     *  suoritus.kirjaa();
+     *  suoritus.getTreeniNro() === n+20+1;
+     * </pre>
+     */
+    public void parse(String rivi) {
+        var sb = new StringBuilder(rivi);
+        setTreeniNro(Mjonot.erota(sb, '|', getTreeniNro()));
+        liikeNro = Mjonot.erota(sb, '|', liikeNro);
+        sarjaMaara = Mjonot.erota(sb, '|', sarjaMaara);
+        toistoMaara = Mjonot.erota(sb, '|', toistoMaara);
+        pvm = Mjonot.erota(sb, '|', pvm);
+    }
+
 
     /**
      * @param args Ei käytössä

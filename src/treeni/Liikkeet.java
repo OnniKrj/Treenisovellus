@@ -1,9 +1,15 @@
 package treeni;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author Onni
@@ -47,21 +53,51 @@ public class Liikkeet implements Iterable<Liike> {
         return loydetyt;
     }
     
+    
     /**
-     * @param hakemisto Tiedoston hakemisto
-     * @throws SailoException Ilmoitus jos epäonnistuu
+     * 
+     * @param hakemisto Luettava tiedosto
+     * @throws SailoException Virheilmoitus jos lukeminen epäonnistuu
+     * @example
+     * <pre name="test">
+     * 
+     * </pre>
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedostonNimi = hakemisto + ".liike";
-        throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedostonNimi);
+        String nimi = hakemisto + "/liikkeet.dat";
+        File ftied = new File(nimi);
+        
+        try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
+            while (fi.hasNext()) {
+                String s = fi.nextLine();
+                if (s == null || s.equals("") || s.charAt(0) == ';') continue;
+                Liike liike = new Liike();
+                liike.parse(s);
+                lisaa(liike);
+            }
+        } catch (FileNotFoundException e) {
+            throw new SailoException("Ei saa luettua tiedostoa " + nimi);
+        }
     }
     
     
     /**
-     * @throws SailoException Ilmoitus, jos epäonnistuu
+     * @param hakemisto Tallennettavan tiedoston hakemisto
+     * @throws SailoException Jos tallennus epäonnistuu
+     * @example
+     * <pre name="test">
+     * 
+     * </pre>
      */
-    public void talleta() throws SailoException {
-        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedostonNimi);
+    public void tallenna(String hakemisto) throws SailoException {
+        File ftied = new File(hakemisto + "/liikkeet.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
+            for (var lkt : alkiot) { //liikkeet
+                fo.println(lkt.toString());
+            }
+        } catch (FileNotFoundException ex) {
+            throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
+        }
     }
     
     
@@ -77,6 +113,13 @@ public class Liikkeet implements Iterable<Liike> {
      */
     public static void main(String[] args) {
         Liikkeet liikkeet = new Liikkeet();
+        
+        try {
+            liikkeet.lueTiedostosta("treeni");
+        } catch (SailoException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
         Liike punnerrus1 = new Liike();
         punnerrus1.TaytaLiikeTiedoilla(2);
         Liike punnerrus2 = new Liike();
@@ -99,6 +142,13 @@ public class Liikkeet implements Iterable<Liike> {
         for (Liike liike : liikkeet2) {
             System.out.println(liike.getTreeniNro() + "");
             liike.tulosta(System.out);
+        }
+        
+        try {
+            liikkeet.tallenna("treeni"); 
+        } catch (SailoException e) {
+            //e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         
     }

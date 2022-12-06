@@ -3,6 +3,8 @@ package treeni;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * @author Onni
  * @version 30.11.2022
@@ -17,6 +19,24 @@ public class Liike {
     
     private static int seuraavaNro = 1;
     
+    
+    /**
+     * Seuraava treeninumero on aina tämänhetkistä suurempi
+     * @param nr Asetettava treeninumero / id
+     */
+    private void setTreeniNro(int nr) {
+        treeniNro = nr;
+        if ( treeniNro >= seuraavaNro ) seuraavaNro = treeniNro + 1;
+    }
+    
+    /**
+     * Seuraava liikenumero on aina tämänhetkistä suurempi
+     * @param lnr Asetettava liikenumero / id
+     */
+    private void setLiikeNro(int lnr) {
+        liikeNro = lnr;
+        if (liikeNro >= seuraavaNro) seuraavaNro = liikeNro + 1;
+    }
     
     /**
      * Alustetaan liike tyhjäksi
@@ -61,9 +81,55 @@ public class Liike {
     public void TaytaLiikeTiedoilla(int nro) {
         treeniNro = nro;
         liikeNimi = "Pystypunnerrus";
+        liikeNro = 2; // TODO: Kytköksiä muualle?? Oli unohtunut lisätä aikasemmassa vaiheessa tähän
         
         
     }
+    
+    
+    /**
+     * @param rivi Rivi jolta tiedot otetaan
+     * @example
+     * @example
+     * <pre name="test">
+     *  Suoritus suoritus = new Suoritus();
+     *  suoritus.parse(" 3 |  1  |  3");
+     *  suoritus.getTreeniNro() === 3;
+     *  suoritus.toString().startsWith("3|1|3|") === true;
+     *  
+     *  suoritus.kirjaa();
+     *  int n = suoritus.getTreeniNro();
+     *  suoritus.parse(""+(n+20));
+     *  suoritus.kirjaa();
+     *  suoritus.getTreeniNro() === n+20+1;
+     * </pre>
+     */
+    public void parse(String rivi) {
+        var sb = new StringBuilder(rivi);
+        setTreeniNro(Mjonot.erota(sb, '|', getTreeniNro()));
+        setLiikeNro(Mjonot.erota(sb, '|', getLiikeNro()));
+        liikeNimi = Mjonot.erota(sb, '|', liikeNimi);
+    }
+    
+    
+    /**
+     * @return Suorituksen tiedot merkkijonona
+     * @example
+     * <pre name="test">
+     * Suoritus suoritus = new Suoritus();
+     * suoritus.parse(" 3 |  1  |  3");
+     * suoritus.toString().startsWith("3|1|3|") === true;
+     * </pre>
+     */
+    @Override
+    public String toString() {
+        return "" +
+                getTreeniNro() + "|" +
+                getLiikeNro() + "|" +
+                liikeNimi;
+    }
+    
+    
     
     /**
      * @return Täytetään

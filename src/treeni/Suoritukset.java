@@ -4,9 +4,11 @@
 package treeni;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 /**
  * @author Onni
@@ -79,11 +81,34 @@ public class Suoritukset {
     }
     
     /**
+     * 
+     * @param hakemisto Luettava tiedosto
+     * @throws SailoException Virheilmoitus jos lukeminen epäonnistuu
+     */
+    public void lueTiedostosta(String hakemisto) throws SailoException {
+        String nimi = hakemisto + "/suoritukset.dat";
+        File ftied = new File(nimi);
+        
+        try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
+            while (fi.hasNext()) {
+                String s = fi.nextLine();
+                if (s == null || s.equals("") || s.charAt(0) == ';') continue;
+                Suoritus suoritus = new Suoritus();
+                suoritus.parse(s);
+                lisaa(suoritus);
+            }
+        } catch (FileNotFoundException e) {
+            throw new SailoException("Ei saa luettua tiedostoa " + nimi);
+        }
+    }
+    
+    
+    /**
      * @param hakemisto Tallennettavan tiedoston hakemisto
      * @throws SailoException Jos tallennus epäonnistuu
      */
     public void tallenna(String hakemisto) throws SailoException {
-        File ftied = new File(hakemisto + "/treenit.dat");
+        File ftied = new File(hakemisto + "/suoritukset.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (int i = 0; i < this.getLkm(); i++) {
                 Suoritus suoritus = this.anna(i);
@@ -100,6 +125,14 @@ public class Suoritukset {
     public static void main(String[] args){
         
       Suoritukset suoritukset = new Suoritukset();
+      
+      try {
+          suoritukset.lueTiedostosta("treeni");
+      } catch (SailoException ex) {
+          System.err.println(ex.getMessage());
+      }
+      
+      
       Suoritus treeni1 = new Suoritus();
       Suoritus treeni2 = new Suoritus();
       
