@@ -139,7 +139,11 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
     
     private void tallenna() {
-        Dialogs.showMessageDialog("Vielä ei osata tallentaa!");
+        try {
+            treeni.tallenna();
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }
     }
     
     @Override
