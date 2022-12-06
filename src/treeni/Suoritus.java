@@ -81,6 +81,25 @@ public class Suoritus {
         paino = 60;
         pvm = "1.10.2022";
     }
+    /**
+     * @return Suorituksen tiedot merkkijonona
+     * @example
+     * <pre name="test">
+     * Suoritus suoritus = new Suoritus();
+     * suoritus.parse(" 3 |  1  |  3");
+     * suoritus.toString().startsWith("3|1|3|") === true;
+     * </pre>
+     */
+    @Override
+    public String toString() {
+        return "" +
+                getTreeniNro() + "|" +
+                liikeNro + "|" +
+                sarjaMaara + "|" +
+                toistoMaara + "|" +
+                paino + "|" +
+                pvm;
+    }
 
     /**
      * @param args Ei käytössä

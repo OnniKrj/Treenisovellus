@@ -3,6 +3,11 @@
  */
 package treeni;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 /**
  * @author Onni
  * @version 7.11.2022
@@ -73,7 +78,21 @@ public class Suoritukset {
         return alkiot[i];
     }
     
-    
+    /**
+     * @param hakemisto Tallennettavan tiedoston hakemisto
+     * @throws SailoException Jos tallennus epäonnistuu
+     */
+    public void tallenna(String hakemisto) throws SailoException {
+        File ftied = new File(hakemisto + "/treenit.dat");
+        try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
+            for (int i = 0; i < this.getLkm(); i++) {
+                Suoritus suoritus = this.anna(i);
+                fo.println(suoritus.toString());
+            }
+        } catch (FileNotFoundException ex) {
+            throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
+        }
+    }
     
     /**
      * @param args Ei käytössä
@@ -105,7 +124,13 @@ public class Suoritukset {
           System.err.println(e.getMessage());
         
     }
-      
+     try {
+         suoritukset.tallenna("treeni"); 
+     } catch (SailoException e) {
+         //e.printStackTrace();
+         System.err.println(e.getMessage());
+     }
+     
       
     
     }
