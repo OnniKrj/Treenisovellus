@@ -14,7 +14,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.SuorituksetController">
    <top>
-      <Label text="Suorituksen tiedot:" BorderPane.alignment="CENTER">
+      <Label text="Treenin tiedot:" BorderPane.alignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>
@@ -28,7 +28,8 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleDefaultOK" text="Tallenna">
+            <Button mnemonicParsing="false" onAction="#handleLisaaUusiLiike" text="Uusi liike" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
@@ -44,12 +45,12 @@
    <left>
       <ScrollBorder BorderPane.alignment="CENTER">
          <children>
-            <ListChooser fx:id="chooserSuoritukset" prefHeight="400.0" prefWidth="185.0" rivit="Treeni 013&#10;Treeni 012&#10;Treeni 011&#10;Treeni 010&#10;Treeni 009" />
+            <ListChooser fx:id="chooserSuoritukset" prefWidth="150.0" rivit="Treeni 013&#10;Treeni 012&#10;Treeni 011&#10;Treeni 010&#10;Treeni 009" />
          </children>
       </ScrollBorder>
    </left>
    <center>
-      <ScrollPane fx:id="panelSuoritus" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="panelSuoritus" fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
             <StringGrid rivit="Päivämäärä|Liike|Sarjat|Toistot|Paino (kg)&#10;1.10.2022|Pystypunnerrus|3|8|40&#10;1.10.2022|Kyykky|4|6|85&#10;1.10.2022|Dippi|3|10|0&#10;1.10.2022|Vinopenkki kp|3|8|50&#10;1.10.2022|Askelkyykky|2|20|32&#10;29.9.2022|Maastaveto|3|8|80&#10;29.9.2022|Leuanveto|3|10|0&#10;29.9.2022|Alatalja|3|8|50&#10;29.9.2022|Ylätalja|3|8|60&#10;">
                <columnResizePolicy>
@@ -58,4 +59,11 @@
          </content>
       </ScrollPane>
    </center>
+   <right>
+      <ScrollBorder BorderPane.alignment="CENTER">
+         <children>
+            <StringGrid prefWidth="185.0" rivit="Liikkeen nimi| Liikkeen id&#10;Kyykky|1&#10;Maastaveto|2&#10;Pystypunnerrus|4&#10;Penkkipunnerrus|3&#10;" />
+         </children>
+      </ScrollBorder>
+   </right>
 </BorderPane>

@@ -162,8 +162,8 @@ public class TreenisovellusGUIController {
      */
     public void paivita() {
         alusta();
-        uusiSuoritus();
-        uusiLiike();
+        //uusiSuoritus();
+        //uusiLiike();
     }
     
     
