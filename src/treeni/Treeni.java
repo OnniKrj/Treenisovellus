@@ -108,7 +108,7 @@ public class Treeni {
         Treeni treeni = new Treeni();
         
         try {
-            treeni.lueTiedostosta("koetreeni");
+            treeni.lueTiedostosta("treeni");
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
         }

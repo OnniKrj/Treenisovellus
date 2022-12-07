@@ -29,6 +29,7 @@ public class TreenisovellusMain extends Application {
             
             Treeni treeni = new Treeni();
             treeniCtrl.setTreeni(treeni);
+            
 
             
         } catch(Exception e) {

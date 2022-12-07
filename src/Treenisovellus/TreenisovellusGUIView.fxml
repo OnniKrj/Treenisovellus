@@ -24,6 +24,7 @@
                 <Menu mnemonicParsing="false" text="Muokkaa">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaSuoritusta" text="Muokkaa suoritusta" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Apua">
@@ -44,11 +45,6 @@
             <HBox alignment="CENTER">
                <children>
                   <Button mnemonicParsing="false" onAction="#handleUusiSuoritus" text="Suoritukset">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleUusiLiike" text="Lisää uusi liike">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>

@@ -1,7 +1,9 @@
 package Treenisovellus;
 
 import java.io.PrintStream;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
@@ -9,6 +11,7 @@ import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.TextAreaOutputStream;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Font;
@@ -23,13 +26,11 @@ import treeni.Treeni;
  *
  * Luokka käsittelemään treenisovelluksen tapahtumia.
  */
-public class TreenisovellusGUIController {
+public class TreenisovellusGUIController implements Initializable {
     
     @FXML private ListChooser<Suoritus> chooserSuoritukset;
 
-    @FXML void handleUusiLiike() {
-        UusiLiikeController.avaaLiikkeet(null, treeni);
-    }
+    
 
     @FXML void handleUusiSuoritus() {
         
@@ -48,7 +49,11 @@ public class TreenisovellusGUIController {
     
     @FXML void handleMuokkaaSuoritusta() {
         muokkaaSuoritusta();
-        
+    }
+    
+    @FXML
+    void handleTulosta() {
+        //
     }
     
     
@@ -61,15 +66,44 @@ public class TreenisovellusGUIController {
     //================================================================================
         
     private Treeni treeni;
+    private String treenikerta;
     private Suoritus suoritusKohdalla;
     private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
     
+    
     /**
-     * @param treeni todo
+     * @param treeni Treeni -luokka tuodaan käyttöliittymälle
      */
     public void setTreeni(Treeni treeni) {
         this.treeni = treeni;
+        lue();
         
+    }
+    
+    
+    private String lueTiedosto(String nimi) {
+        try {
+            treeni.lueTiedostosta(nimi);
+            hae(0);
+            return null;
+            
+        } catch (SailoException e) {
+            hae(0);
+            String virhe = e.getMessage(); 
+            if ( virhe != null ) Dialogs.showMessageDialog(virhe);
+            return virhe;
+
+        }
+
+    }
+    
+    /**
+     * Nimetään luettava tiedosto ja kutsutaan lueTiedosto -metodia
+     */
+    public void lue() {
+        String nimi = "treeni";
+        treenikerta = nimi;
+        lueTiedosto(nimi);
     }
     
     
@@ -96,7 +130,6 @@ public class TreenisovellusGUIController {
         }
         hae(uusi.getTreeniNro());
     }
-    
     
 
     
@@ -166,6 +199,7 @@ public class TreenisovellusGUIController {
         //uusiLiike();
     }
     
+
     
     
     /**
@@ -193,6 +227,12 @@ public class TreenisovellusGUIController {
      */
     public void avaaSovellus() {
         Dialogs.showMessageDialog("Sovellus ei aukea tästä vielä");
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        //avaa();
+        
     }
     
 }

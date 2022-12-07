@@ -34,7 +34,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     
     
     @FXML void handleDefaultCancel() {
-        //
+        ModalController.closeStage(panelSuoritus);
     }
 
     @FXML void handleDefaultOK() {
@@ -61,6 +61,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     //==============================================================================
 
     private Treeni treeni;
+    private String treenit = "treeni";
     private Suoritus suoritusKohdalla;
     private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
     
@@ -125,6 +126,21 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         }
     }
     
+    private String lueTiedosto(String nimi) {
+        treenit = nimi;
+        try {
+            treeni.lueTiedostosta(nimi);
+            hae(0);
+            return null;
+        } catch (SailoException e) {
+            hae(0);
+            String virhe = e.getMessage(); 
+            if ( virhe != null ) Dialogs.showMessageDialog(virhe);
+            return virhe;
+
+        }
+    }
+    
     /**
      * @param os Tulostusvirta
      * @param suoritus Tulostettava suoritus
@@ -159,12 +175,13 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
 
     
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         alusta();
         
+        
     }
+
     
     
     private void alusta() {
@@ -177,7 +194,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
     
     
-    //T‰h‰n metodi, jota kutsutaan p‰‰kontrollerista
     /**
      * @param modalityStage todo 
      * @param oletus todo
@@ -197,5 +213,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         
     }
     
+
 
 }

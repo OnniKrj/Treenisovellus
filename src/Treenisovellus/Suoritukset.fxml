@@ -28,7 +28,10 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleLisaaUusiLiike" text="Uusi liike" />
+            <Button mnemonicParsing="false" onAction="#handleLisaaUusiLiike" text="Uusi liike">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin></Button>
             <Button defaultButton="true" mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
