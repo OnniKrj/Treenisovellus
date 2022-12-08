@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public class Liikkeet implements Iterable<Liike> {
 
-    private String tiedostonNimi = "";
+    //private String tiedostonNimi = "";
     
     /** Taulukko liikkeistä **/
     private final Collection<Liike> alkiot = new ArrayList<Liike>();

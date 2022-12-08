@@ -8,6 +8,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -15,11 +20,12 @@ import java.util.Scanner;
  * @version 7.11.2022
  * CRC-kortin tiedot
  */
-public class Suoritukset {
+public class Suoritukset implements Iterable<Suoritus>{
     
     private static final int MAX_SUORITUKSIA = 5;
+    private boolean muutettu = false;
     private int lkm = 0;
-    private Suoritus[] alkiot;
+    private Suoritus alkiot[] = new Suoritus[MAX_SUORITUKSIA];
 
     
     /**
@@ -54,9 +60,10 @@ public class Suoritukset {
      */
     public void lisaa(Suoritus suoritus) throws SailoException {
         
-        if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
+        if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, alkiot.length + 5);
         this.alkiot[this.lkm] = suoritus;
         lkm++;
+        muutettu = true;
     }
     
     
@@ -77,6 +84,7 @@ public class Suoritukset {
     public Suoritus anna(int i) throws IndexOutOfBoundsException {
         if (i < 0 || this.lkm <= i)
             throw new IndexOutOfBoundsException("Laiton indeksi: " + i);
+        
         return alkiot[i];
     }
     
@@ -97,6 +105,7 @@ public class Suoritukset {
                 suoritus.parse(s);
                 lisaa(suoritus);
             }
+            muutettu = false;
         } catch (FileNotFoundException e) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
         }
@@ -108,6 +117,7 @@ public class Suoritukset {
      * @throws SailoException Jos tallennus epäonnistuu
      */
     public void tallenna(String hakemisto) throws SailoException {
+        if ( !muutettu ) return;
         File ftied = new File(hakemisto + "/suoritukset.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (int i = 0; i < this.getLkm(); i++) {
@@ -117,6 +127,8 @@ public class Suoritukset {
         } catch (FileNotFoundException ex) {
             throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
         }
+        
+        muutettu = false;
     }
     
     /**
@@ -167,6 +179,66 @@ public class Suoritukset {
       
     
     }
+    
+    /**
+     * @author Onni
+     * @version 8.12.2022
+     *
+     */
+    public class SuorituksetIterator implements Iterator<Suoritus> {
+
+        private int kohdalla = 0;
+        
+        
+        /**
+         * Onko seuraavaa suoritusta olemassa?
+         * @return True jos on vielä suorituksia
+         */
+        @Override
+        public boolean hasNext() {
+            
+            return kohdalla < getLkm();
+        }
+
+        /**
+         * Annetaan seuraava suoritus
+         * @return seuraava suoritus
+         */
+        @Override
+        public Suoritus next() throws NoSuchElementException {
+            if (!hasNext()) throw new NoSuchElementException("Ei ole");
+            return anna(kohdalla++);
+        }
+        
+    }
+
+    /**
+     * Palautetaan iteraattori suorituksistaan
+     * @return Suoritus iteraattori
+     */
+    @Override
+    public Iterator<Suoritus> iterator() {
+        return new SuorituksetIterator();
+    }
+    
+
+     
+    /**
+     * @param hakuehto Hakuehto
+     * @param k Etsittävän kentän indeksi
+     * @return Tietorakenne löytyneistä suorituksista
+     */
+    /*
+    @SuppressWarnings("unused")
+    public Collection<Suoritus> etsi(String hakuehto, int k) { 
+        Collection<Suoritus> loytyneet = new ArrayList<Suoritus>(); 
+        for (Suoritus suoritus : this) { 
+            loytyneet.add(suoritus);  
+        } 
+        return loytyneet; 
+    }
+    */
+
 
 
 

@@ -2,6 +2,7 @@ package Treenisovellus;
 
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -77,6 +78,8 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }*/
     
     private void hae(int tnro) {
+        
+        //Collection<Suoritus> suoritukset;
         chooserSuoritukset.clear();
         
         int index = 0;
