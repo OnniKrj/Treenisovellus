@@ -83,8 +83,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }*/
     
     private void hae(int tnro) {
-        
-        //Collection<Suoritus> suoritukset;
         chooserSuoritukset.clear();
         
         int index = 0;
@@ -136,7 +134,8 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     
     private void muokkaa() {
         Suoritus suoritusKohdalla = chooserSuoritukset.getSelectedObject();
-        ModalController.showModal(TreenisovellusGUIController.class.getResource("MuokkaaSuoritusta.fxml"), "Treenit", null, suoritusKohdalla);
+        if (suoritusKohdalla == null) return;
+        MuokkaaSuoritustaController.kysySuoritus(null, suoritusKohdalla);
     }
     
     private String lueTiedosto(String nimi) {
@@ -191,6 +190,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         alusta();
+        naytaSuoritus();
         
         
     }
@@ -226,6 +226,5 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         
     }
     
-
-
+    
 }

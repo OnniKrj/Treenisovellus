@@ -35,17 +35,17 @@
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
             <Button defaultButton="true" mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Button>
             <Button cancelButton="true" mnemonicParsing="false" onAction="#handleDefaultCancel" text="Poistu">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>

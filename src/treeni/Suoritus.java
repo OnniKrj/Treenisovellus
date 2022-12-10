@@ -71,23 +71,38 @@ public class Suoritus {
     }
     
     
+    /**
+     * @return Suorituksen liikenro
+     */
     public int getLiikeNro() {
         return liikeNro;
     }
     
+    /**
+     * @return Suorituksen sarjamaara
+     */
     public int getSarjaMaara() {
         return sarjaMaara;
     }
     
     
+    /**
+     * @return Suorituksen toistom‰‰r‰
+     */
     public int getToistoMaara() {
         return toistoMaara;
     }
     
+    /**
+     * @return Suorituksen paino kiloina
+     */
     public double getPaino() {
         return paino;
     }
     
+    /**
+     * @return P‰iv‰ys
+     */
     public String getPvm() {
         return pvm;
     }

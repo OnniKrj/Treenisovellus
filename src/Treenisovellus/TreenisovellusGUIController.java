@@ -118,7 +118,7 @@ public class TreenisovellusGUIController implements Initializable {
         }
         chooserSuoritukset.setSelectedIndex(index);
     }
-    
+    /*
     private void uusiSuoritus() {
         Suoritus uusi = new Suoritus();
         uusi.kirjaa();
@@ -130,6 +130,7 @@ public class TreenisovellusGUIController implements Initializable {
         }
         hae(uusi.getTreeniNro());
     }
+    */
     
 
     
@@ -231,7 +232,8 @@ public class TreenisovellusGUIController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        //avaa();
+        alusta();
+        naytaSuoritus();
         
     }
     

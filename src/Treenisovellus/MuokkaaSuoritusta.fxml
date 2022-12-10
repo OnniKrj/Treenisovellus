@@ -25,6 +25,7 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="430.0" minWidth="10.0" prefWidth="300.0" />
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -32,36 +33,45 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Päivämäärä:">
+            <Label text="Päivämäärä:" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="Liike / liike-id:" GridPane.rowIndex="1">
+            <Label text="Liike / liike-id:" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="Sarjamäärä:" GridPane.rowIndex="2">
+            <Label text="Sarjamäärä:" GridPane.rowIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="Toistot:" GridPane.rowIndex="3">
+            <Label text="Toistot:" GridPane.rowIndex="4">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label text="Paino (kg):" GridPane.rowIndex="4">
+            <Label text="Paino (kg):" GridPane.rowIndex="5">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField prefWidth="264.0" GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="editPvm" prefWidth="264.0" text="10.12.2022" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="editLiikeNro" text="Pystypunnerrus 2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="editSarjat" text="3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="editToistot" text="8" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="editPaino" text="40" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="naytaTreeniNro" text="001" GridPane.columnIndex="1" />
+            <Label text="Treeni id:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
