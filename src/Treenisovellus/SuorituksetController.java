@@ -56,6 +56,11 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         tallenna();
     }
     
+    @FXML
+    void handleMuokkaa() {
+        muokkaa();
+    }
+    
     @FXML private ScrollPane panelSuoritus;
     
     
@@ -127,6 +132,11 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
             for (Liike liike : liikkeet)
                 liike.tulosta(os);
         }
+    }
+    
+    private void muokkaa() {
+        Suoritus suoritusKohdalla = chooserSuoritukset.getSelectedObject();
+        ModalController.showModal(TreenisovellusGUIController.class.getResource("MuokkaaSuoritusta.fxml"), "Treenit", null, suoritusKohdalla);
     }
     
     private String lueTiedosto(String nimi) {

@@ -71,6 +71,27 @@ public class Suoritus {
     }
     
     
+    public int getLiikeNro() {
+        return liikeNro;
+    }
+    
+    public int getSarjaMaara() {
+        return sarjaMaara;
+    }
+    
+    
+    public int getToistoMaara() {
+        return toistoMaara;
+    }
+    
+    public double getPaino() {
+        return paino;
+    }
+    
+    public String getPvm() {
+        return pvm;
+    }
+    
     /**
      * Seuraava treeninumero on aina tämänhetkistä suurempi
      * @param nr Asetettava treeninumero

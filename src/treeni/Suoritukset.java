@@ -23,7 +23,6 @@ import java.util.Scanner;
 public class Suoritukset implements Iterable<Suoritus>{
     
     private static final int MAX_SUORITUKSIA = 5;
-    private boolean muutettu = false;
     private int lkm = 0;
     private Suoritus alkiot[] = new Suoritus[MAX_SUORITUKSIA];
 
@@ -63,7 +62,6 @@ public class Suoritukset implements Iterable<Suoritus>{
         if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, alkiot.length + 5);
         this.alkiot[this.lkm] = suoritus;
         lkm++;
-        muutettu = true;
     }
     
     
@@ -105,7 +103,6 @@ public class Suoritukset implements Iterable<Suoritus>{
                 suoritus.parse(s);
                 lisaa(suoritus);
             }
-            muutettu = false;
         } catch (FileNotFoundException e) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
         }
@@ -117,7 +114,6 @@ public class Suoritukset implements Iterable<Suoritus>{
      * @throws SailoException Jos tallennus epäonnistuu
      */
     public void tallenna(String hakemisto) throws SailoException {
-        if ( !muutettu ) return;
         File ftied = new File(hakemisto + "/suoritukset.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (int i = 0; i < this.getLkm(); i++) {
@@ -128,7 +124,6 @@ public class Suoritukset implements Iterable<Suoritus>{
             throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
         }
         
-        muutettu = false;
     }
     
     /**
