@@ -4,6 +4,8 @@
 package treeni;
 
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import fi.jyu.mit.ohj2.Mjonot;
 
@@ -12,14 +14,11 @@ import fi.jyu.mit.ohj2.Mjonot;
  * @version 7.11.2022
  * CRC-kortin sis‰ltˆ
  */
-public class Suoritus {
+public class Suoritus implements Cloneable {
     
-    private int treeniNro;
-    private int liikeNro = 0;
-    private int sarjaMaara = 0;
-    private int toistoMaara = 0;
-    private double paino = 0;
-    private String pvm = "";
+    private int treeniNro; // suoritus numero
+
+    private String pvm = new SimpleDateFormat("dd-MM-yyyy").format(new Date());;
     
     private static int seuraavaNro = 1;
     
@@ -35,10 +34,10 @@ public class Suoritus {
      */
     public void tulosta(PrintStream out) {
         out.println(String.format("%03d", treeniNro));
-        out.println("Liikkeen tunnus: " + liikeNro);
-        out.println("Sarjojen m‰‰r‰: " + sarjaMaara);
-        out.println("Toistojen m‰‰r‰: " + toistoMaara);
-        out.println("Sarja paino: " + paino + "kg");
+        //out.println("Liikkeen tunnus: " + liikeNro);
+        //out.println("Sarjojen m‰‰r‰: " + sarjaMaara);
+        //out.println("Toistojen m‰‰r‰: " + toistoMaara);
+        //out.println("Sarja paino: " + paino + "kg");
         out.println("P‰iv‰m‰‰r‰: " + pvm + "\n");
     }
     
@@ -74,14 +73,14 @@ public class Suoritus {
     /**
      * @return Suorituksen liikenro
      */
-    public int getLiikeNro() {
+    /*public int getLiikeNro() {
         return liikeNro;
     }
     
     /**
      * @return Suorituksen sarjamaara
      */
-    public int getSarjaMaara() {
+    /*public int getSarjaMaara() {
         return sarjaMaara;
     }
     
@@ -89,14 +88,14 @@ public class Suoritus {
     /**
      * @return Suorituksen toistom‰‰r‰
      */
-    public int getToistoMaara() {
+    /*public int getToistoMaara() {
         return toistoMaara;
     }
     
     /**
      * @return Suorituksen paino kiloina
      */
-    public double getPaino() {
+    /*public double getPaino() {
         return paino;
     }
     
@@ -106,6 +105,17 @@ public class Suoritus {
     public String getPvm() {
         return pvm;
     }
+    
+    /**
+     * Asettaa suorituksen p‰iv‰m‰‰r‰n
+     * @param s uusi pvm
+     * @return virheteksti jos ei kelpaa
+     */
+    public String setPvm(String s) {
+        pvm = s;
+        return null;
+    }
+
     
     /**
      * Seuraava treeninumero on aina t‰m‰nhetkist‰ suurempi
@@ -124,10 +134,10 @@ public class Suoritus {
      */
     public void taytaTreeniTiedoilla() {
         
-        liikeNro = 1;
-        sarjaMaara = 3;
-        toistoMaara = 8;
-        paino = 60;
+        //liikeNro = 1;
+        //sarjaMaara = 3;
+        //toistoMaara = 8;
+        //paino = 60;
         pvm = "1.10.2022";
     }
     /**
@@ -143,10 +153,10 @@ public class Suoritus {
     public String toString() {
         return "" +
                 getTreeniNro() + "|" +
-                liikeNro + "|" +
-                sarjaMaara + "|" +
-                toistoMaara + "|" +
-                paino + "|" +
+                //liikeNro + "|" +
+                //sarjaMaara + "|" +
+                //toistoMaara + "|" +
+                //paino + "|" +
                 pvm;
     }
     
@@ -170,10 +180,17 @@ public class Suoritus {
     public void parse(String rivi) {
         var sb = new StringBuilder(rivi);
         setTreeniNro(Mjonot.erota(sb, '|', getTreeniNro()));
-        liikeNro = Mjonot.erota(sb, '|', liikeNro);
-        sarjaMaara = Mjonot.erota(sb, '|', sarjaMaara);
-        toistoMaara = Mjonot.erota(sb, '|', toistoMaara);
+        //liikeNro = Mjonot.erota(sb, '|', liikeNro);
+        //sarjaMaara = Mjonot.erota(sb, '|', sarjaMaara);
+        //toistoMaara = Mjonot.erota(sb, '|', toistoMaara);
         pvm = Mjonot.erota(sb, '|', pvm);
+    }
+    
+    @Override
+    public Suoritus clone() throws CloneNotSupportedException {
+        Suoritus uusi;
+        uusi = (Suoritus) super.clone();
+        return uusi;
     }
 
 
@@ -197,5 +214,7 @@ public class Suoritus {
         treeni2.tulosta(System.out);
     
     }
+
+ 
 
 }

@@ -2,16 +2,18 @@
 
 <?import fi.jyu.mit.fxgui.ListChooser?>
 <?import fi.jyu.mit.fxgui.ScrollBorder?>
-<?import fi.jyu.mit.fxgui.StringGrid?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -51,7 +53,7 @@
                   </Button>
                </children>
             </HBox>
-            <Label text="Viimeisimmät suoritukset:">
+            <Label text="Viimeisin suoritus:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -59,13 +61,6 @@
          </children>
       </VBox>
    </top>
-   <center>
-      <ScrollPane fx:id="panelSuoritus" BorderPane.alignment="CENTER">
-         <content>
-            <StringGrid rivit="Päivämäärä|Liike|Sarjat|Toistot|Paino (kg)&#10;1.10.2022|Pystypunnerrus|3|8|40&#10;1.10.2022|Kyykky|4|6|85&#10;1.10.2022|Dippi|3|10|0&#10;1.10.2022|Vinopenkki kp|3|8|50&#10;1.10.2022|Askelkyykky|2|20|32&#10;29.9.2022|Maastaveto|3|8|80&#10;29.9.2022|Leuanveto|3|10|0&#10;29.9.2022|Alatalja|3|8|50&#10;29.9.2022|Ylätalja|3|8|60" />
-         </content>
-      </ScrollPane>
-   </center>
    <bottom>
       <VBox alignment="BOTTOM_RIGHT" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="BOTTOM_RIGHT">
          <children>
@@ -96,4 +91,30 @@
          </children>
       </ScrollBorder>
    </left>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Päivämäärä:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </TextField>
+         </children>
+      </GridPane>
+   </center>
 </BorderPane>

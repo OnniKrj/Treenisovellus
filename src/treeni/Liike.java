@@ -2,6 +2,8 @@ package treeni;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import fi.jyu.mit.ohj2.Mjonot;
 
@@ -14,8 +16,11 @@ public class Liike {
 
     
     private int liikeNro;
-    private int treeniNro;
+    private int treeniNro; // Suoritus numero?
     private String liikeNimi = "";
+    private int sarjaMaara = 0;
+    private int toistoMaara = 0;
+    private double paino = 0;
     
     private static int seuraavaNro = 1;
     
@@ -67,11 +72,36 @@ public class Liike {
         return liikeNimi;
     }
     
+    
     /**
      * @return Treenin numero
      */
     public int getTreeniNro() {
         return treeniNro;
+    }
+       
+    
+    
+    /**
+     * @return Suorituksen sarjamaara
+     */
+    public int getSarjaMaara() {
+        return sarjaMaara;
+    }
+    
+    
+    /**
+     * @return Suorituksen toistomäärä
+     */
+    public int getToistoMaara() {
+        return toistoMaara;
+    }
+    
+    /**
+     * @return Suorituksen paino kiloina
+     */
+    public double getPaino() {
+        return paino;
     }
     
     /**
@@ -82,6 +112,9 @@ public class Liike {
         treeniNro = nro;
         liikeNimi = "Pystypunnerrus";
         liikeNro = 2; // TODO: Kytköksiä muualle?? Oli unohtunut lisätä aikasemmassa vaiheessa tähän
+        sarjaMaara = 3;
+        toistoMaara = 8;
+        paino = 70;
         
         
     }
@@ -109,6 +142,10 @@ public class Liike {
         setTreeniNro(Mjonot.erota(sb, '|', getTreeniNro()));
         setLiikeNro(Mjonot.erota(sb, '|', getLiikeNro()));
         liikeNimi = Mjonot.erota(sb, '|', liikeNimi);
+        sarjaMaara = Mjonot.erota(sb, '|', sarjaMaara);
+        toistoMaara = Mjonot.erota(sb, '|', toistoMaara);
+        paino = Mjonot.erota(sb, '|', paino);
+        
     }
     
     
@@ -126,7 +163,10 @@ public class Liike {
         return "" +
                 getTreeniNro() + "|" +
                 getLiikeNro() + "|" +
-                liikeNimi;
+                liikeNimi + "|" +
+                sarjaMaara + "|" +
+                toistoMaara + "|" +
+                paino;
     }
     
     
@@ -155,7 +195,7 @@ public class Liike {
      * @param out Tulostettava tietovirta
      */
     public void tulosta(PrintStream out) {
-        out.println(liikeNimi + " " + liikeNro);
+        out.println("id " + liikeNro + " " + liikeNimi + " Sarjat " + sarjaMaara + " Toistot " + toistoMaara + " Paino " + paino);
         
     }
     

@@ -10,12 +10,14 @@ import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
+import fi.jyu.mit.fxgui.StringGrid;
 import fi.jyu.mit.fxgui.TextAreaOutputStream;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import treeni.Liike;
@@ -26,12 +28,14 @@ import treeni.Treeni;
 /**
  * @author Onni
  * @version 8.11.2022
- * Suoritukset n‰kym‰n ohjuri
+ * Suoritukset nkymn ohjuri
  */
 public class SuorituksetController implements ModalControllerInterface<Treeni>, Initializable {
     
     
     @FXML private ListChooser<Suoritus> chooserSuoritukset;
+    @FXML StringGrid<Liike> tableLiikkeet;
+    @FXML TextField editPvm;
     
     
     @FXML void handleDefaultCancel() {
@@ -39,7 +43,12 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
 
     @FXML void handleDefaultOK() {
-        //
+        tallenna();
+    }
+    
+    @FXML
+    void handleMuokkaa() {
+        muokkaa();
     }
     
     @FXML void handleLisaaUusiSuoritus() {
@@ -56,11 +65,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         tallenna();
     }
     
-    @FXML
-    void handleMuokkaa() {
-        muokkaa();
-    }
-    
     @FXML private ScrollPane panelSuoritus;
     
     
@@ -69,7 +73,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     private Treeni treeni;
     private String treenit = "treeni";
     private Suoritus suoritusKohdalla;
-    private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
+    private TextField[] edits;
     
     /*
     private void naytaSuoritus() {
@@ -83,6 +87,8 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }*/
     
     private void hae(int tnro) {
+        
+        //Collection<Suoritus> suoritukset;
         chooserSuoritukset.clear();
         
         int index = 0;
@@ -107,7 +113,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
     
     /**
-     * Uuden liikkeen lis‰‰minen
+     * Uuden liikkeen lisminen
      */
     public void uusiLiike() {
         if (suoritusKohdalla == null) return;
@@ -123,19 +129,22 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
         
-        areaSuoritus.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaSuoritus)) {
-            suoritusKohdalla.tulosta(os);
-            List<Liike> liikkeet = treeni.annaLiikkeet(suoritusKohdalla);
-            for (Liike liike : liikkeet)
-                liike.tulosta(os);
-        }
+        MuokkaaSuoritustaController.naytaSuoritus(edits, suoritusKohdalla);
+        naytaLiikkeet(suoritusKohdalla);
     }
     
-    private void muokkaa() {
-        Suoritus suoritusKohdalla = chooserSuoritukset.getSelectedObject();
-        if (suoritusKohdalla == null) return;
-        MuokkaaSuoritustaController.kysySuoritus(null, suoritusKohdalla);
+    private void naytaLiikkeet(Suoritus suoritus) {
+        tableLiikkeet.clear();
+        if (suoritus == null) return;
+        List<Liike> liikkeet = treeni.annaLiikkeet(suoritus);
+        if (liikkeet.size() == 0) return;
+        for (Liike liik : liikkeet)
+            naytaLiike(liik);
+    }
+    
+    private void naytaLiike(Liike liik) {
+        String[] rivi = liik.toString().split("\\|");
+        tableLiikkeet.add(liik, rivi[1], rivi[2]);
     }
     
     private String lueTiedosto(String nimi) {
@@ -151,6 +160,13 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
             return virhe;
 
         }
+    }
+    
+    
+    private void muokkaa() {
+        Suoritus suoritusKohdalla = chooserSuoritukset.getSelectedObject();
+        if (suoritusKohdalla == null) return;
+        MuokkaaSuoritustaController.kysySuoritus(null, suoritusKohdalla);
     }
     
     /**
@@ -190,7 +206,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         alusta();
-        naytaSuoritus();
+        
         
         
     }
@@ -198,12 +214,11 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     
     
     private void alusta() {
-        panelSuoritus.setContent(areaSuoritus);
-        areaSuoritus.setFont(new Font("Courier New", 12));
         panelSuoritus.setFitToHeight(true);
         chooserSuoritukset.clear();
         chooserSuoritukset.addSelectionListener(e -> naytaSuoritus());
-        
+        TextField[] edts = {editPvm};
+        edits = edts;
     }
     
     
@@ -214,7 +229,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
      */
     public static Treeni avaaSuoritukset(Stage modalityStage, Treeni oletus) {
         return ModalController.<Treeni, SuorituksetController>showModal(SuorituksetController.class.getResource("Suoritukset.fxml"),
-                "Treenin lis‰ys",
+                "Treenin lisys",
                 modalityStage, oletus,
                 null 
             );
@@ -226,5 +241,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         
     }
     
-    
+
+
 }

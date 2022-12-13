@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import treeni.Suoritus;
 import treeni.Treeni;
+import javafx.scene.control.Label;
 
 /**
  * @author Onni
@@ -20,34 +21,40 @@ import treeni.Treeni;
  */
 public class MuokkaaSuoritustaController  implements ModalControllerInterface<Suoritus>, Initializable {
 
+
+    
     @FXML TextField editPvm;
-    @FXML TextField naytaTreeniNro;
-    @FXML TextField editSarjat;
-    @FXML TextField editToistot;
-    @FXML TextField editPaino;
-    @FXML TextField editLiikeNro;
+    @FXML Label labelVirhe;
+    //@FXML TextField editSarjat;
+    //@FXML TextField editToistot;
+    //@FXML TextField editPaino;
+    //@FXML TextField editLiikeNro;
     
     
     @FXML private void handleOK() {
-        //TODO: laita oikea k‰sittely
+        if (suoritusKohdalla != null && suoritusKohdalla.getPvm().trim().equals("")) {
+            naytaVirhe("P‰iv‰m‰‰r‰ ei voi olla tyhj‰");
+            return;
+        }
+        ModalController.closeStage(labelVirhe);
     }
 
     
     @FXML private void handleCancel() {
+        suoritusKohdalla = null;
         ModalController.closeStage(editPvm);
     }
     
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
+        alusta();
         
     }
 
     @Override
     public Suoritus getResult() {
-        // TODO Auto-generated method stub
-        return null;
+        return suoritusKohdalla;
     }
 
     @Override
@@ -59,23 +66,57 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
     @Override
     public void setDefault(Suoritus oletus) {
         this.suoritusKohdalla = oletus;
-        naytaSuoritus(suoritusKohdalla);
+        naytaSuoritus(edits, suoritusKohdalla);
     }
     
     //====================================================================================
     
     
     private Suoritus suoritusKohdalla;
+    private TextField[] edits;
 
     
-    private void naytaSuoritus(Suoritus suoritus) {
+    private void alusta() {
+        edits = new TextField[]{editPvm};
+        editPvm.setOnKeyReleased(e -> kasitteleMuutosSuoritukseen(1, editPvm));
+    }
+    
+    
+    private void kasitteleMuutosSuoritukseen(int k, TextField edit) {
+        if (suoritusKohdalla == null) return;
+        String s = edit.getText();
+        String virhe = null;
+        virhe = suoritusKohdalla.setPvm(s);
+        if (virhe == null) {
+            naytaVirhe(virhe);
+        } else {
+            naytaVirhe(virhe);
+        }
+    }
+    
+    
+    /**
+     * @param edits Taulukko jossa on tarvittavat tekstikent‰t
+     * @param suoritus N‰ytett‰v‰ suoritus
+     */
+    public static void naytaSuoritus(TextField[] edits, Suoritus suoritus) {
+        
         if (suoritus == null) return;
-        naytaTreeniNro.setText(""+suoritus.getTreeniNro());
-        editPvm.setText(suoritus.getPvm());
-        editPaino.setText(""+suoritus.getPaino());
-        editLiikeNro.setText(""+suoritus.getLiikeNro());
-        editSarjat.setText(""+suoritus.getSarjaMaara());
-        editToistot.setText(""+suoritus.getToistoMaara());
+        edits[0].setText(suoritus.getPvm());
+        //edits[1].setText(""+suoritus.getLiikeNro());
+        //edits[2].setText(""+suoritus.getPaino());
+        //edits[3].setText(""+suoritus.getSarjaMaara());
+        //edits[4].setText(""+suoritus.getToistoMaara()); 
+    }
+    
+    private void naytaVirhe(String virhe) {
+        if (virhe == null || virhe.isEmpty()) {
+            labelVirhe.setText("");
+            labelVirhe.getStyleClass().removeAll("Virhe");
+            return;
+        }
+        labelVirhe.setText(virhe);
+        labelVirhe.getStyleClass().add("virhe");
     }
     
 

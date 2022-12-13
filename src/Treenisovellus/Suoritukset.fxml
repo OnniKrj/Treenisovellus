@@ -37,7 +37,7 @@
                </HBox.margin></Button>
             <Button mnemonicParsing="false" onAction="#handleMuokkaa" text="Muokkaa">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
             <Button defaultButton="true" mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
@@ -70,10 +70,6 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Päivämäärä:">
@@ -84,63 +80,10 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Liike:" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
+                  <TextField fx:id="editPvm" text="1.1.2022" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Sarjamäärä:" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Toistot:" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Paino (kg):" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </TextField>
+                     </GridPane.margin></TextField>
                </children>
             </GridPane>
          </content>
@@ -149,7 +92,7 @@
    <right>
       <ScrollBorder BorderPane.alignment="CENTER">
          <children>
-            <StringGrid prefWidth="185.0" rivit="Liikkeen nimi| Liikkeen id&#10;Kyykky|1&#10;Maastaveto|2&#10;Pystypunnerrus|4&#10;Penkkipunnerrus|3&#10;" />
+            <StringGrid fx:id="tableLiikkeet" prefWidth="185.0" rivit="Liikkeen id|Nimi&#10;1|Kyyykky&#10;2|Pystypunnerrus&#10;3|Penkkipunnerrus&#10;4|Ojentajat&#10;" />
          </children>
       </ScrollBorder>
    </right>

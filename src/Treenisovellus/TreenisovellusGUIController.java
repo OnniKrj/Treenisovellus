@@ -24,7 +24,7 @@ import treeni.Treeni;
  * @author Onni
  * @version 7.10.2022
  *
- * Luokka k‰sittelem‰‰n treenisovelluksen tapahtumia.
+ * Luokka ksittelemn treenisovelluksen tapahtumia.
  */
 public class TreenisovellusGUIController implements Initializable {
     
@@ -66,13 +66,12 @@ public class TreenisovellusGUIController implements Initializable {
     //================================================================================
         
     private Treeni treeni;
-    private String treenikerta;
     private Suoritus suoritusKohdalla;
     private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
     
     
     /**
-     * @param treeni Treeni -luokka tuodaan k‰yttˆliittym‰lle
+     * @param treeni Treeni -luokka tuodaan kyttliittymlle
      */
     public void setTreeni(Treeni treeni) {
         this.treeni = treeni;
@@ -98,11 +97,10 @@ public class TreenisovellusGUIController implements Initializable {
     }
     
     /**
-     * Nimet‰‰n luettava tiedosto ja kutsutaan lueTiedosto -metodia
+     * Nimetn luettava tiedosto ja kutsutaan lueTiedosto -metodia
      */
     public void lue() {
         String nimi = "treeni";
-        treenikerta = nimi;
         lueTiedosto(nimi);
     }
     
@@ -118,7 +116,7 @@ public class TreenisovellusGUIController implements Initializable {
         }
         chooserSuoritukset.setSelectedIndex(index);
     }
-    /*
+    
     private void uusiSuoritus() {
         Suoritus uusi = new Suoritus();
         uusi.kirjaa();
@@ -130,7 +128,6 @@ public class TreenisovellusGUIController implements Initializable {
         }
         hae(uusi.getTreeniNro());
     }
-    */
     
 
     
@@ -148,7 +145,7 @@ public class TreenisovellusGUIController implements Initializable {
     }
     
     /**
-     * Uuden liikkeen lis‰‰minen
+     * Uuden liikkeen lisminen
      */
     public void uusiLiike() {
         if (suoritusKohdalla == null) return;
@@ -184,15 +181,15 @@ public class TreenisovellusGUIController implements Initializable {
     }
     
     /**
-     * N‰ytet‰‰n sovelluksen tiedot.
+     * Nytetn sovelluksen tiedot.
      */
     public void naytaVersio() {
-        Dialogs.showMessageDialog("Viel‰ ei osata katsoa versiota");
+        Dialogs.showMessageDialog("Viel ei osata katsoa versiota");
         
     }
     
     /**
-     * Nappi jolla p‰ivitet‰‰n p‰‰sivun n‰kym‰ // TODO: muuta oikeaksi p‰ivitys -napiksi, nyt se virheellisesti lis‰‰ uusia toteutuksia
+     * Nappi jolla pivitetn psivun nkym // TODO: muuta oikeaksi pivitys -napiksi, nyt se virheellisesti lis uusia toteutuksia
      */
     public void paivita() {
         alusta();
@@ -204,11 +201,11 @@ public class TreenisovellusGUIController implements Initializable {
     
     
     /**
-     *  N‰ytet‰‰n suoritusten muokkaus ikkuna
+     *  Nytetn suoritusten muokkaus ikkuna
      */
     public void muokkaaSuoritusta() {
         SuorituksetController.avaaSuoritukset(null, treeni);
-        //Dialogs.showMessageDialog("Ei pysty muokkaamaan aiempia suorituksia viel‰");
+        //Dialogs.showMessageDialog("Ei pysty muokkaamaan aiempia suorituksia viel");
     }
     
 
@@ -219,21 +216,20 @@ public class TreenisovellusGUIController implements Initializable {
     public void suljeSovellus() {
         Platform.exit();
         
-        //Dialogs.showMessageDialog("Viel‰ ei pysty sulkemaan t‰st‰");
+        //Dialogs.showMessageDialog("Viel ei pysty sulkemaan tst");
     }
     
     
     /**
-     * Siirryt‰‰n p‰‰n‰kym‰‰n
+     * Siirrytn pnkymn
      */
     public void avaaSovellus() {
-        Dialogs.showMessageDialog("Sovellus ei aukea t‰st‰ viel‰");
+        Dialogs.showMessageDialog("Sovellus ei aukea tst viel");
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        alusta();
-        naytaSuoritus();
+        //avaa();
         
     }
     
