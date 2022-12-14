@@ -198,7 +198,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        hae(0);
         
     }
 
@@ -214,6 +214,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     
     
     private void alusta() {
+        
         panelSuoritus.setFitToHeight(true);
         chooserSuoritukset.clear();
         chooserSuoritukset.addSelectionListener(e -> naytaSuoritus());

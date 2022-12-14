@@ -92,7 +92,7 @@
    <right>
       <ScrollBorder BorderPane.alignment="CENTER">
          <children>
-            <StringGrid fx:id="tableLiikkeet" prefWidth="185.0" rivit="Liikkeen id|Nimi&#10;1|Kyyykky&#10;2|Pystypunnerrus&#10;3|Penkkipunnerrus&#10;4|Ojentajat&#10;" />
+            <StringGrid fx:id="tableLiikkeet" rivit="Liikkeen id|Nimi|Sarjat|Toistot|Paino&#10;1|Kyyykky|3|8|70&#10;2|Pystypunnerrus|3|8|40&#10;3|Penkkipunnerrus|3&#10;4|Ojentajat&#10;" />
          </children>
       </ScrollBorder>
    </right>
