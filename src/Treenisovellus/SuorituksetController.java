@@ -71,20 +71,12 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     //==============================================================================
 
     private Treeni treeni;
-    private String treenit = "treeni";
     private Suoritus suoritusKohdalla;
     private TextField[] edits;
     
-    /*
-    private void naytaSuoritus() {
-        suoritusKohdalla = chooserSuoritukset.getSelectedObject();
-        if (suoritusKohdalla == null) return;
-        
-        areaSuoritus.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaSuoritus)) {
-            suoritusKohdalla.tulosta(os);
-        }
-    }*/
+    //TODO: uusi listChooser Liikkeet ikkunalle!!
+   
+    
     
     private void hae(int tnro) {
         
@@ -144,29 +136,23 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     
     private void naytaLiike(Liike liik) {
         String[] rivi = liik.toString().split("\\|");
-        tableLiikkeet.add(liik, rivi[1], rivi[2]);
+        tableLiikkeet.add(liik, rivi[1], rivi[2],rivi[3],rivi[4],rivi[5]);
     }
     
-    private String lueTiedosto(String nimi) {
-        treenit = nimi;
-        try {
-            treeni.lueTiedostosta(nimi);
-            hae(0);
-            return null;
-        } catch (SailoException e) {
-            hae(0);
-            String virhe = e.getMessage(); 
-            if ( virhe != null ) Dialogs.showMessageDialog(virhe);
-            return virhe;
-
-        }
-    }
     
     
     private void muokkaa() {
-        Suoritus suoritusKohdalla = chooserSuoritukset.getSelectedObject();
+        suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
-        MuokkaaSuoritustaController.kysySuoritus(null, suoritusKohdalla);
+        try {
+            Suoritus suoritus = MuokkaaSuoritustaController.kysySuoritus(null, suoritusKohdalla.clone());
+            if (suoritus == null) return;
+            treeni.korvaaTaiLisaa(suoritus);
+            hae(suoritus.getTreeniNro());
+        } catch (CloneNotSupportedException | SailoException e) {
+            Dialogs.showMessageDialog(e.getMessage());;
+        }
+
     }
     
     /**

@@ -25,6 +25,7 @@ public class Suoritukset implements Iterable<Suoritus>{
     private static final int MAX_SUORITUKSIA = 5;
     private int lkm = 0;
     private Suoritus alkiot[] = new Suoritus[MAX_SUORITUKSIA];
+    private boolean muutettu = false;
 
     
     /**
@@ -62,6 +63,25 @@ public class Suoritukset implements Iterable<Suoritus>{
         if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, alkiot.length + 5);
         this.alkiot[this.lkm] = suoritus;
         lkm++;
+        muutettu = true;
+    }
+    
+    /**
+     * 
+     * @param suoritus Lisättävän suorituksen viite
+     * @throws SailoException Virhe, jos tietorakenne on jo täynnä
+     */
+    public void korvaaTaiLisaa(Suoritus suoritus) throws SailoException {
+        int id = suoritus.getTreeniNro();
+        for (int i = 0; i < lkm; i++) {
+            if (alkiot[i].getTreeniNro() == id) {
+                alkiot[i] = suoritus;
+                muutettu = true;
+                return;
+            }
+        }
+        lisaa(suoritus);
+        
     }
     
     
@@ -106,6 +126,7 @@ public class Suoritukset implements Iterable<Suoritus>{
         } catch (FileNotFoundException e) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
         }
+        muutettu = false;
     }
     
     
@@ -114,6 +135,7 @@ public class Suoritukset implements Iterable<Suoritus>{
      * @throws SailoException Jos tallennus epäonnistuu
      */
     public void tallenna(String hakemisto) throws SailoException {
+        if (!muutettu) return;
         File ftied = new File(hakemisto + "/suoritukset.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (int i = 0; i < this.getLkm(); i++) {
