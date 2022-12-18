@@ -108,18 +108,27 @@ public class Suoritus implements Cloneable {
         return pvm;
     }
     
+    
     /**
-     * Asettaa suorituksen p‰iv‰m‰‰r‰n
-     * @param s uusi pvm
-     * @return virheteksti jos ei kelpaa
+     * @param k Kuinka monennes kentt‰
+     * @param jono Asetetaan kent‰n arvoksi
+     * @return null jos asettaminen onnistuu, muuten virhe
      */
-    public String setPvm(String s) {
-        String virhe = pvmt.tarkista(s);
-        if (virhe != null) return virhe;
-        pvm = s;
+    public String aseta(int k, String jono) {
+        String tjono = jono.trim();
+        switch (k) {
+        case 0:
+            String virhe = pvmt.tarkista(jono);
+            if (virhe != null) return virhe;
+            pvm = tjono;
+            return null;
+
+            
+        default:
+            break;
+        }
         return null;
     }
-
     
     
     /**

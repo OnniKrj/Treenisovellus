@@ -79,8 +79,14 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
     
     private void alusta() {
         edits = new TextField[]{editPvm};
-        editPvm.setOnKeyReleased(e -> kasitteleMuutosSuoritukseen(1, editPvm));
+        int i = 0;
+        for (TextField edit : edits) {
+            final int k = i++;
+            edit.setOnKeyReleased(e -> kasitteleMuutosSuoritukseen(k, edit));
+        }
+        
     }
+    
     
     /*
      * K‰sitell‰‰n suoritukseen tullut muutos
@@ -89,13 +95,7 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
     private void kasitteleMuutosSuoritukseen(int k, TextField edit) {
         if (suoritusKohdalla == null) return;
         String s = edit.getText();
-        String virhe = null;
-        switch (k) {
-            case 1: virhe = suoritusKohdalla.setPvm(s); break;
-
-        default:
-            break;
-        }
+        String virhe = suoritusKohdalla.aseta(k, s);
         if (virhe != null) {
             Dialogs.setToolTipText(edit, virhe);
             edit.getStyleClass().add("virhe");
