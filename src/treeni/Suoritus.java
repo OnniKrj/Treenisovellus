@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import fi.jyu.mit.ohj2.Mjonot;
+import kanta.PvmTarkistus;
 
 /**
  * @author Onni
@@ -18,7 +19,8 @@ public class Suoritus implements Cloneable {
     
     private int treeniNro; // suoritus numero
 
-    private String pvm = new SimpleDateFormat("dd-MM-yyyy").format(new Date());;
+    private String pvm = new SimpleDateFormat("dd.MM.yyyy").format(new Date());;
+    private PvmTarkistus pvmt = new PvmTarkistus();
     
     private static int seuraavaNro = 1;
     
@@ -112,10 +114,13 @@ public class Suoritus implements Cloneable {
      * @return virheteksti jos ei kelpaa
      */
     public String setPvm(String s) {
+        String virhe = pvmt.tarkista(s);
+        if (virhe != null) return virhe;
         pvm = s;
         return null;
     }
 
+    
     
     /**
      * Seuraava treeninumero on aina tämänhetkistä suurempi

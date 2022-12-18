@@ -4,6 +4,7 @@ package Treenisovellus;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.fxml.FXML;
@@ -81,16 +82,28 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
         editPvm.setOnKeyReleased(e -> kasitteleMuutosSuoritukseen(1, editPvm));
     }
     
-    
+    /*
+     * K‰sitell‰‰n suoritukseen tullut muutos
+     * @param k Kentt‰ jota muokataan, toistaiseksi vain pvm muokattavana
+     */
     private void kasitteleMuutosSuoritukseen(int k, TextField edit) {
         if (suoritusKohdalla == null) return;
         String s = edit.getText();
         String virhe = null;
-        virhe = suoritusKohdalla.setPvm(s);
-        if (virhe == null) {
+        switch (k) {
+            case 1: virhe = suoritusKohdalla.setPvm(s); break;
+
+        default:
+            break;
+        }
+        if (virhe != null) {
+            Dialogs.setToolTipText(edit, virhe);
+            edit.getStyleClass().add("virhe");
             naytaVirhe(virhe);
         } else {
-            naytaVirhe(virhe);
+            Dialogs.setToolTipText(edit, "");
+            edit.getStyleClass().add("normaali");
+            naytaVirhe("");
         }
     }
     
