@@ -93,15 +93,17 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
     
     private void uusiSuoritus() {
-        Suoritus uusi = new Suoritus();
-        uusi.kirjaa();
-        uusi.taytaTreeniTiedoilla();
         try {
+            Suoritus uusi = new Suoritus();
+            uusi = MuokkaaSuoritustaController.kysySuoritus(null, uusi);
+            if (uusi == null) return;
+            uusi.kirjaa();
             treeni.lisaa(uusi);
+            hae(uusi.getTreeniNro());
         } catch (SailoException e) {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
+            return;
         }
-        hae(uusi.getTreeniNro());
     }
     
     /**
