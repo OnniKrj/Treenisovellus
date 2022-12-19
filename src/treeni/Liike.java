@@ -6,17 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import fi.jyu.mit.ohj2.Mjonot;
+import kanta.Tietue;
 
 /**
  * @author Onni
  * @version 30.11.2022
  * Toteutus liike luokalle
  */
-public class Liike {
+public class Liike implements Cloneable, Tietue {
 
-    
-    private int liikeNro;
     private int treeniNro; // Suoritus numero?
+    private int liikeNro;
     private String liikeNimi = "";
     private int sarjaMaara = 0;
     private int toistoMaara = 0;
@@ -102,6 +102,70 @@ public class Liike {
      */
     public double getPaino() {
         return paino;
+    }
+    
+    
+    /**
+     * Palauttaa jäsenen kenttien lukumäärän
+     * @return kenttien lukumäärä
+     */
+    @Override
+    public int getKenttia() {
+        return 5;
+    }
+
+    
+    /**
+     * Eka kenttä joka on mielekäs kysyttäväksi
+     * @return eknn kentän indeksi
+     */
+    @Override
+    public int ekaKentta() {
+        return 0;
+    }
+
+    
+    /**
+     * Palauttaa k:tta jäsenen kenttää vastaavan kysymyksen
+     * @param k kuinka monennen kentän kysymys palautetaan (0-alkuinen)
+     * @return k:netta kenttää vastaava kysymys
+     */
+    @Override
+    public String getKysymys(int k) {
+        switch ( k ) {
+        case 0: return "Liikkeen id";
+        case 1: return "Liikkeen nimi";
+        case 2: return "Sarjat";
+        case 3: return "Toistot";
+        case 4: return "Paino";
+        default: return "Asd";
+
+        }
+    }
+    
+    
+    /**
+     * Antaa k:n kentän sisällön merkkijonona
+     * @param k monenenko kentän sisältö palautetaan
+     * @return kentän sisältö merkkijonona
+     */
+    @Override
+    public String anna(int k) {
+        switch ( k ) {
+        case 0: return "" + liikeNro;
+        case 1: return "" + liikeNimi;
+        case 2: return "" + sarjaMaara;
+        case 3: return "" + toistoMaara;
+        case 4: return "" + paino;
+        default: return "Asd";
+
+        }
+
+    }
+    
+    @Override
+    public Liike clone() throws CloneNotSupportedException {
+        return (Liike)super.clone();
     }
     
     /**
@@ -216,5 +280,11 @@ public class Liike {
         liike.kirjaa();
         liike.tulosta(System.out);
         
+    }
+
+    @Override
+    public String aseta(int k, String s) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import kanta.Tietue;
 import treeni.Suoritus;
 import treeni.Treeni;
 import javafx.scene.Node;
@@ -22,9 +23,10 @@ import javafx.scene.layout.GridPane;
 /**
  * @author Onni
  * @version 21.10.2022
+ * @param <TYPE> a
  *
  */
-public class MuokkaaSuoritustaController  implements ModalControllerInterface<Suoritus>, Initializable {
+public class TietueDialogController<TYPE extends Tietue> implements ModalControllerInterface<TYPE>,Initializable  {
 
 
     
@@ -39,7 +41,7 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
     
     
     @FXML private void handleOK() {
-        if (suoritusKohdalla != null && suoritusKohdalla.getPvm().trim().equals("")) {
+        if (tietueKohdalla != null && tietueKohdalla.anna(tietueKohdalla.ekaKentta()).trim().equals("")) {
             naytaVirhe("P‰iv‰m‰‰r‰ ei voi olla tyhj‰");
             return;
         }
@@ -48,7 +50,7 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
 
     
     @FXML private void handleCancel() {
-        suoritusKohdalla = null;
+        tietueKohdalla = null;
         ModalController.closeStage(labelVirhe);
     }
     
@@ -60,34 +62,35 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
     }
 
     @Override
-    public Suoritus getResult() {
-        return suoritusKohdalla;
+    public TYPE getResult() {
+        return tietueKohdalla;
     }
 
     @Override
     public void handleShown() {
-        // TODO Auto-generated method stub
+        //
         
     }
 
     @Override
-    public void setDefault(Suoritus oletus) {
-        this.suoritusKohdalla = oletus;
-        naytaSuoritus(edits, suoritusKohdalla);
+    public void setDefault(TYPE oletus) {
+        this.tietueKohdalla = oletus;
+        naytaTietue(edits, tietueKohdalla);
     }
     
     //====================================================================================
     
     
-    private Suoritus suoritusKohdalla;
+    private TYPE tietueKohdalla;
     private TextField[] edits;
     private static Suoritus apusuoritus = new Suoritus();
+    private int kentta = 0;
 
     
     /**
-     * Palautetaan komponentin id:st‰ saatava luku
+     * Palautetaan komponentin id:st saatava luku
      * @param obj tutkittava komponentti
-     * @param oletus mik‰ arvo, jos id ei ole kunnollinen
+     * @param oletus mik arvo, jos id ei ole kunnollinen
      * @return Komponentin id lukuna
      */
     public static int getFieldId(Object obj, int oletus) {
@@ -100,7 +103,7 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
     /**
      * Luodaan GridPaneen suorituksen tiedot
      * @param gridSuoritus Mihin tiedot luodaan
-     * @return luodut tekstikent‰t
+     * @return luodut tekstikentt
      */
     public static TextField[] luoKentat(GridPane gridSuoritus) {
         gridSuoritus.getChildren().clear();
@@ -127,16 +130,20 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
         
     }
     
+    private void setKentta(int kentta) {
+        this.kentta = kentta;
+    }
+    
     
     /*
-     * K‰sitell‰‰n suoritukseen tullut muutos
-     * @param k Kentt‰ jota muokataan, toistaiseksi vain pvm muokattavana
+     * Ksitelln suoritukseen tullut muutos
+     * @param k Kentt jota muokataan, toistaiseksi vain pvm muokattavana
      */
     private void kasitteleMuutosSuoritukseen(TextField edit) {
-        if (suoritusKohdalla == null) return;
+        if (tietueKohdalla == null) return;
         String s = edit.getText();
         int k = getFieldId(edit, apusuoritus.ekaKentta());
-        String virhe = suoritusKohdalla.aseta(k, s);
+        String virhe = tietueKohdalla.aseta(k, s);
         if (virhe != null) {
             Dialogs.setToolTipText(edit, virhe);
             edit.getStyleClass().add("virhe");
@@ -150,14 +157,14 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
     
     
     /**
-     * @param edits Taulukko jossa on tarvittavat tekstikent‰t
-     * @param suoritus N‰ytett‰v‰ suoritus
+     * @param edits Taulukko jossa on tarvittavat tekstikentt
+     * @param tietue N‰ytett‰v‰ suoritus
      */
-    public static void naytaSuoritus(TextField[] edits, Suoritus suoritus) {
+    public static void naytaTietue(TextField[] edits, Tietue tietue) {
         
-        if (suoritus == null) return;
-        for (int k = suoritus.ekaKentta(); k < suoritus.getKenttia(); k++) {
-            edits[k].setText(suoritus.anna(k));
+        if (tietue == null) return;
+        for (int k = tietue.ekaKentta(); k < tietue.getKenttia(); k++) {
+            edits[k].setText(tietue.anna(k));
             
         }
     }
@@ -175,12 +182,20 @@ public class MuokkaaSuoritustaController  implements ModalControllerInterface<Su
 
     /**
      * Luodaan suorituksen muokkausdialogi ja palautetaan se muokattuna tai nullina
+     * @param <TYPE> a
      * @param modalityStage Mille ollaan modaalisia
-     * @param oletus Mit‰ dataan n‰ytet‰‰n oletuksena
-     * @return null jos painetaa Peruuta, muuten t‰ytetty tietue
+     * @param oletus Mit dataan nytetn oletuksena
+     * @param kentta b
+     * @return null jos painetaa Peruuta, muuten tytetty tietue
      */
-    public static Suoritus kysySuoritus(Stage modalityStage, Suoritus oletus) {
-        return ModalController.showModal(TreenisovellusGUIController.class.getResource("MuokkaaSuoritusta.fxml"), "Suoritus", modalityStage, oletus);
-        
+    public static<TYPE extends Tietue> TYPE kysyTietue(Stage modalityStage, TYPE oletus, int kentta) {
+        return ModalController.<TYPE, TietueDialogController<TYPE>>showModal(
+                TietueDialogController.class.getResource("MuokkaaSuoritusta.fxml"),
+                "Treeni",
+                modalityStage, oletus,
+                ctrl -> ctrl.setKentta(kentta)
+                );
     }
+
 }
+

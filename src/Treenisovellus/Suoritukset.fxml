@@ -90,10 +90,9 @@
       </ScrollPane>
    </center>
    <right>
-      <ScrollBorder BorderPane.alignment="CENTER">
-         <children>
-            <StringGrid fx:id="tableLiikkeet" rivit="Liikkeen id|Nimi|Sarjat|Toistot|Paino&#10;1|Kyyykky|3|8|70&#10;2|Pystypunnerrus|3|8|40&#10;3|Penkkipunnerrus|3&#10;4|Ojentajat&#10;" />
-         </children>
-      </ScrollBorder>
+      <StringGrid fx:id="tableLiikkeet" rivit="Liikkeen id|Nimi|Sarjat|Toistot|Paino&#10;1|Kyyykky|3|8|70&#10;2|Pystypunnerrus|3|8|40&#10;3|Penkkipunnerrus|3&#10;4|Ojentajat&#10;">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin></StringGrid>
    </right>
 </BorderPane>

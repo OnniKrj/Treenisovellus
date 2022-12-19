@@ -9,13 +9,14 @@ import java.util.Date;
 
 import fi.jyu.mit.ohj2.Mjonot;
 import kanta.PvmTarkistus;
+import kanta.Tietue;
 
 /**
  * @author Onni
  * @version 7.11.2022
  * CRC-kortin sisältö
  */
-public class Suoritus implements Cloneable {
+public class Suoritus implements Cloneable, Tietue {
     
     private int treeniNro; // suoritus numero
 
@@ -76,6 +77,7 @@ public class Suoritus implements Cloneable {
      * Palauttaa jäsenen kenttien lukumäärän
      * @return kenttien lukumäärä
      */
+    @Override
     public int getKenttia() {
         return 1;
     }
@@ -85,6 +87,7 @@ public class Suoritus implements Cloneable {
      * Eka kenttä joka on mielekäs kysyttäväksi
      * @return eknn kentän indeksi
      */
+    @Override
     public int ekaKentta() {
         return 0;
     }
@@ -95,6 +98,7 @@ public class Suoritus implements Cloneable {
      * @param k kuinka monennen kentän kysymys palautetaan (0-alkuinen)
      * @return k:netta kenttää vastaava kysymys
      */
+    @Override
     public String getKysymys(int k) {
         switch ( k ) {
         case 0: return "Päivämäärä";
@@ -110,6 +114,7 @@ public class Suoritus implements Cloneable {
      * @param k monenenko kentän sisältö palautetaan
      * @return kentän sisältö merkkijonona
      */
+    @Override
     public String anna(int k) {
         switch ( k ) {
         case 0: return "" + pvm;
@@ -166,6 +171,7 @@ public class Suoritus implements Cloneable {
      * @param jono Asetetaan kentän arvoksi
      * @return null jos asettaminen onnistuu, muuten virhe
      */
+    @Override
     public String aseta(int k, String jono) {
         String tjono = jono.trim();
         switch (k) {
@@ -174,6 +180,7 @@ public class Suoritus implements Cloneable {
             if (virhe != null) return virhe;
             pvm = tjono;
             return null;
+
 
             
         default:
@@ -191,7 +198,7 @@ public class Suoritus implements Cloneable {
         treeniNro = nr;
         if ( treeniNro >= seuraavaNro ) seuraavaNro = treeniNro + 1;
     }
-
+  
     
     
     /**

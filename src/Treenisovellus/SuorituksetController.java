@@ -15,7 +15,9 @@ import fi.jyu.mit.fxgui.TextAreaOutputStream;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
@@ -48,7 +50,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     
     @FXML
     void handleMuokkaa() {
-        muokkaa();
+        muokkaa(kentta);
     }
     
     @FXML void handleLisaaUusiSuoritus() {
@@ -73,6 +75,8 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     private Treeni treeni;
     private Suoritus suoritusKohdalla;
     private TextField[] edits;
+    private static Liike apuliike = new Liike();
+    private int kentta = 0;
     
     //TODO: uusi listChooser Liikkeet ikkunalle!!
    
@@ -95,7 +99,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     private void uusiSuoritus() {
         try {
             Suoritus uusi = new Suoritus();
-            uusi = MuokkaaSuoritustaController.kysySuoritus(null, uusi);
+            uusi = TietueDialogController.kysyTietue(null, uusi, 1);
             if (uusi == null) return;
             uusi.kirjaa();
             treeni.lisaa(uusi);
@@ -123,7 +127,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
         
-        MuokkaaSuoritustaController.naytaSuoritus(edits, suoritusKohdalla);
+        TietueDialogController.naytaTietue(edits, suoritusKohdalla);
         naytaLiikkeet(suoritusKohdalla);
     }
     
@@ -137,17 +141,23 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
     
     private void naytaLiike(Liike liik) {
-        String[] rivi = liik.toString().split("\\|");
-        tableLiikkeet.add(liik, rivi[1], rivi[2],rivi[3],rivi[4],rivi[5]);
+        
+        int kenttia = liik.getKenttia(); 
+        String[] rivi = new String[kenttia-liik.ekaKentta()]; 
+        for (int i=0, k=liik.ekaKentta(); k < kenttia; i++, k++) 
+            rivi[i] = liik.anna(k); 
+        tableLiikkeet.add(liik,rivi);
+        //String[] rivi = liik.toString().split("\\|");
+        //tableLiikkeet.add(liik, rivi[1], rivi[2],rivi[3],rivi[4],rivi[5]);
     }
     
     
     
-    private void muokkaa() {
+    private void muokkaa(int k) {
         suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
         try {
-            Suoritus suoritus = MuokkaaSuoritustaController.kysySuoritus(null, suoritusKohdalla.clone());
+            Suoritus suoritus = TietueDialogController.kysyTietue(null, suoritusKohdalla.clone(), k);
             if (suoritus == null) return;
             treeni.korvaaTaiLisaa(suoritus);
             hae(suoritus.getTreeniNro());
@@ -208,6 +218,16 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         chooserSuoritukset.addSelectionListener(e -> naytaSuoritus());
         TextField[] edts = {editPvm};
         edits = edts;
+        
+        int eka = apuliike.ekaKentta(); 
+        int lkm = apuliike.getKenttia(); 
+        String[] headings = new String[lkm-eka]; 
+        for (int i=0, k=eka; k<lkm; i++, k++) headings[i] = apuliike.getKysymys(k); 
+        tableLiikkeet.initTable(headings); 
+        tableLiikkeet.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
+        tableLiikkeet.setEditable(false); 
+        tableLiikkeet.setPlaceholder(new Label("Ei vielä harrastuksia")); 
+        
     }
     
     
@@ -218,7 +238,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
      */
     public static Treeni avaaSuoritukset(Stage modalityStage, Treeni oletus) {
         return ModalController.<Treeni, SuorituksetController>showModal(SuorituksetController.class.getResource("Suoritukset.fxml"),
-                "Treenin lisys",
+                "Treenin lisäys",
                 modalityStage, oletus,
                 null 
             );
