@@ -73,6 +73,55 @@ public class Suoritus implements Cloneable {
     
     
     /**
+     * Palauttaa jäsenen kenttien lukumäärän
+     * @return kenttien lukumäärä
+     */
+    public int getKenttia() {
+        return 1;
+    }
+
+    
+    /**
+     * Eka kenttä joka on mielekäs kysyttäväksi
+     * @return eknn kentän indeksi
+     */
+    public int ekaKentta() {
+        return 0;
+    }
+
+    
+    /**
+     * Palauttaa k:tta jäsenen kenttää vastaavan kysymyksen
+     * @param k kuinka monennen kentän kysymys palautetaan (0-alkuinen)
+     * @return k:netta kenttää vastaava kysymys
+     */
+    public String getKysymys(int k) {
+        switch ( k ) {
+        case 0: return "Päivämäärä";
+        
+        default: return "Asd";
+
+        }
+    }
+    
+    
+    /**
+     * Antaa k:n kentän sisällön merkkijonona
+     * @param k monenenko kentän sisältö palautetaan
+     * @return kentän sisältö merkkijonona
+     */
+    public String anna(int k) {
+        switch ( k ) {
+        case 0: return "" + pvm;
+        default: return "Asd";
+
+        }
+
+    }
+
+    
+    
+    /**
      * @return Suorituksen liikenro
      */
     /*public int getLiikeNro() {
@@ -107,6 +156,9 @@ public class Suoritus implements Cloneable {
     public String getPvm() {
         return pvm;
     }
+    
+    
+    
     
     
     /**
