@@ -112,6 +112,7 @@ public class Liikkeet implements Iterable<Liike> {
      * </pre>
      */
     public void tallenna(String hakemisto) throws SailoException {
+        if ( !muutettu ) return;
         File ftied = new File(hakemisto + "/liikkeet.dat");
         try (PrintStream fo = new PrintStream(new FileOutputStream(ftied, false))) {
             for (var lkt : alkiot) { //liikkeet
@@ -120,6 +121,7 @@ public class Liikkeet implements Iterable<Liike> {
         } catch (FileNotFoundException ex) {
             throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
         }
+        muutettu = false;
     }
     
     

@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import treeni.Liike;
 import treeni.SailoException;
@@ -29,6 +31,7 @@ import treeni.Treeni;
 public class TreenisovellusGUIController implements Initializable {
     
     @FXML private ListChooser<Suoritus> chooserSuoritukset;
+    @FXML private GridPane gridSuoritus;
 
     
 
@@ -68,6 +71,7 @@ public class TreenisovellusGUIController implements Initializable {
     private Treeni treeni;
     private Suoritus suoritusKohdalla;
     private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
+    
     
     
     /**
@@ -117,17 +121,7 @@ public class TreenisovellusGUIController implements Initializable {
         chooserSuoritukset.setSelectedIndex(index);
     }
     
-    private void uusiSuoritus() {
-        Suoritus uusi = new Suoritus();
-        uusi.kirjaa();
-        uusi.taytaTreeniTiedoilla();
-        try {
-            treeni.lisaa(uusi);
-        } catch (SailoException e) {
-            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
-        }
-        hae(uusi.getTreeniNro());
-    }
+    
     
 
     
@@ -135,13 +129,7 @@ public class TreenisovellusGUIController implements Initializable {
         suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
         
-        areaSuoritus.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaSuoritus)) {
-            suoritusKohdalla.tulosta(os);
-            List<Liike> liikkeet = treeni.annaLiikkeet(suoritusKohdalla);
-            for (Liike liike : liikkeet)
-                liike.tulosta(os);
-        }
+        
     }
     
     /**

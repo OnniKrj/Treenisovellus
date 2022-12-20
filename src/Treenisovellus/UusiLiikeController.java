@@ -28,7 +28,6 @@ public class UusiLiikeController implements  ModalControllerInterface<Treeni>, I
         tallenna();
     }
     
-    private Treeni treeni;
     //========================================
     
     
@@ -57,7 +56,7 @@ public class UusiLiikeController implements  ModalControllerInterface<Treeni>, I
     /**
      * @param arg0 Ei käytössä
      */
-    public void setDefault(String arg0) {
+    public void setDefault(@SuppressWarnings("unused") String arg0) {
         // TODO Auto-generated method stub
         
     }
@@ -90,12 +89,4 @@ public class UusiLiikeController implements  ModalControllerInterface<Treeni>, I
     }
     
 
-   /**
-    * @param treeni Treeni
-    */
-    public void setTreeni(Treeni treeni) {
-       this.treeni = treeni;
-      
-       
-   }
 }

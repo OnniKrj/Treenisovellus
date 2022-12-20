@@ -206,11 +206,13 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
             liike.tulosta(os);
     }
     
-    private void tallenna() {
+    private String tallenna() {
         try {
             treeni.tallenna();
+            return null;
         } catch (SailoException e) {
             Dialogs.showMessageDialog(e.getMessage());
+            return e.getMessage();
         }
     }
     
@@ -230,8 +232,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         alusta();
-        
-        
         
     }
 

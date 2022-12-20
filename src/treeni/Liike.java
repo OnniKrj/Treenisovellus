@@ -104,6 +104,7 @@ public class Liike implements Cloneable, Tietue {
         return paino;
     }
     
+
     
     /**
      * Palauttaa j‰senen kenttien lukum‰‰r‰n
@@ -284,7 +285,28 @@ public class Liike implements Cloneable, Tietue {
 
     @Override
     public String aseta(int k, String s) {
-        // TODO Auto-generated method stub
-        return null;
+        String st = s.trim();
+        StringBuffer sb = new StringBuffer(st);
+        switch (k) {
+        case 0:
+            setLiikeNro(Mjonot.erota(sb, '|', getLiikeNro()));
+            return null;
+        case 1:
+            liikeNimi = Mjonot.erota(sb, '|', getLiikeNimi());
+            return null;
+        case 2:
+            sarjaMaara = Mjonot.erota(sb, '|', getSarjaMaara());
+            return null;
+        case 3:
+            toistoMaara = Mjonot.erota(sb, '|', getToistoMaara());
+            return null;
+        case 4:
+            paino = Mjonot.erota(sb, '|', getPaino());
+            return null;
+            
+        default:
+            return "Asd";
+        }
+
     }
 }

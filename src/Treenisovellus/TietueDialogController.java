@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import kanta.Tietue;
+import treeni.SailoException;
 import treeni.Suoritus;
 import treeni.Treeni;
 import javafx.scene.Node;
@@ -44,6 +45,8 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
     }
 
     
+
+
     @FXML private void handleCancel() {
         tietueKohdalla = null;
         ModalController.closeStage(labelVirhe);
@@ -74,6 +77,7 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
         this.tietueKohdalla = oletus;
         alusta();
         naytaTietue(edits, tietueKohdalla);
+        
     }
     
     //====================================================================================
@@ -119,6 +123,7 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
         }
         return edits;
     }
+    
     
     
     private void alusta() {
