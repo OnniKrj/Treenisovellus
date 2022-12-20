@@ -18,10 +18,10 @@ import java.util.Scanner;
  */
 public class Liikkeet implements Iterable<Liike> {
 
-    //private String tiedostonNimi = "";
     
     /** Taulukko liikkeistä **/
-    private final Collection<Liike> alkiot = new ArrayList<Liike>();
+    private final List<Liike> alkiot = new ArrayList<Liike>();
+    private boolean muutettu = false;
     
     
     /**
@@ -37,8 +37,29 @@ public class Liikkeet implements Iterable<Liike> {
      */
     public void lisaa(Liike liike) {
         alkiot.add(liike);
+        muutettu = true;
     }
     
+    
+    /**
+     * 
+     * @param liike Lisättävä liike
+     * @throws SailoException Virhe, jos tietorakenne on jo täynnä
+     */
+    public void korvaaTaiLisaa(Liike liike) throws SailoException {
+        int id = liike.getTreeniNro();
+        for (int i = 0; i < getLkm(); i++) {
+            if (alkiot.get(i).getTreeniNro() == id) {
+                alkiot.set(i, liike);
+                muutettu = true;
+                return;
+
+            }
+
+        }
+        lisaa(liike);
+        
+    }
     
     
     /**
@@ -78,6 +99,7 @@ public class Liikkeet implements Iterable<Liike> {
         } catch (FileNotFoundException e) {
             throw new SailoException("Ei saa luettua tiedostoa " + nimi);
         }
+        muutettu = false;
     }
     
     

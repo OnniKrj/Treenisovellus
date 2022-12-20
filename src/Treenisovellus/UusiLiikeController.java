@@ -28,10 +28,10 @@ public class UusiLiikeController implements  ModalControllerInterface<Treeni>, I
         tallenna();
     }
     
-    
+    private Treeni treeni;
     //========================================
     
-    private Treeni treeni;
+    
     
     @FXML private ListChooser<Suoritus> chooserSuoritukset;
     @FXML private ListChooser<Liike> chooserLiikkeet;

@@ -118,6 +118,7 @@ public class Suoritus implements Cloneable, Tietue {
     public String anna(int k) {
         switch ( k ) {
         case 0: return "" + pvm;
+        
         default: return "Asd";
 
         }

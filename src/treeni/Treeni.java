@@ -41,6 +41,16 @@ public class Treeni {
     }
     
     /**
+     * Korvaa suorituksen tietorakenteessa
+     * @param liike Lis‰tt‰v‰n suorituksen viite
+     * @throws SailoException Virhe, jos tietorakenne on jo t‰ynn‰
+     */
+    public void korvaaTaiLisaa(Liike liike) throws SailoException {
+        liikkeet.korvaaTaiLisaa(liike);
+        
+    }
+    
+    /**
      * Lis‰t‰‰n uusi liike
      * @param liike Lis‰tt‰v‰ liike
      */

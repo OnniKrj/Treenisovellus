@@ -30,14 +30,9 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
 
 
     
-    @FXML TextField editPvm;
     @FXML Label labelVirhe;
-    @FXML GridPane gridSuoritus;
-    @FXML ScrollPane panelSuoritus;
-    //@FXML TextField editSarjat;
-    //@FXML TextField editToistot;
-    //@FXML TextField editPaino;
-    //@FXML TextField editLiikeNro;
+    @FXML GridPane gridTietue;
+    @FXML ScrollPane panelTietue;
     
     
     @FXML private void handleOK() {
@@ -57,7 +52,7 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        alusta();
+        //alusta();
         
     }
 
@@ -68,13 +63,16 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
 
     @Override
     public void handleShown() {
-        //
+        kentta = Math.max(tietueKohdalla.ekaKentta(), Math.min(kentta, tietueKohdalla.getKenttia()-1));
+        edits[kentta].requestFocus();
+
         
     }
 
     @Override
     public void setDefault(TYPE oletus) {
         this.tietueKohdalla = oletus;
+        alusta();
         naytaTietue(edits, tietueKohdalla);
     }
     
@@ -83,8 +81,8 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
     
     private TYPE tietueKohdalla;
     private TextField[] edits;
-    private static Suoritus apusuoritus = new Suoritus();
     private int kentta = 0;
+    
 
     
     /**
@@ -102,31 +100,33 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
     
     /**
      * Luodaan GridPaneen suorituksen tiedot
-     * @param gridSuoritus Mihin tiedot luodaan
+     * @param gridTietue a
+     * @param aputietue b
+     * @param <TYPE> c
      * @return luodut tekstikentt
      */
-    public static TextField[] luoKentat(GridPane gridSuoritus) {
-        gridSuoritus.getChildren().clear();
-        TextField[] edits = new TextField[apusuoritus.getKenttia()];
+    public static<TYPE extends Tietue> TextField[] luoKentat(GridPane gridTietue, TYPE aputietue) {
+        gridTietue.getChildren().clear();
+        TextField[] edits = new TextField[aputietue.getKenttia()];
         
-        for (int i = 0, k = apusuoritus.ekaKentta(); k < apusuoritus.getKenttia(); k++, i++) {
-            Label label = new Label(apusuoritus.getKysymys(k));
-            gridSuoritus.add(label, 0, i);
+        for (int i = 0, k = aputietue.ekaKentta(); k < aputietue.getKenttia(); k++, i++) {
+            Label label = new Label(aputietue.getKysymys(k));
+            gridTietue.add(label, 0, i);
             TextField edit = new TextField();
             edits[k] = edit;
             edit.setId("e"+k);
-            gridSuoritus.add(edit, 1, i);
+            gridTietue.add(edit, 1, i);
         }
         return edits;
     }
     
     
     private void alusta() {
-        edits = luoKentat(gridSuoritus);
+        edits = luoKentat(gridTietue, tietueKohdalla);
         for (TextField edit : edits)
             if (edit != null)
-                edit.setOnKeyReleased( e -> kasitteleMuutosSuoritukseen((TextField)(e.getSource())));
-        panelSuoritus.setFitToHeight(true);
+                edit.setOnKeyReleased( e -> kasitteleMuutosTietueeseen((TextField)(e.getSource())));
+        panelTietue.setFitToHeight(true);
         
     }
     
@@ -139,10 +139,10 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
      * Ksitelln suoritukseen tullut muutos
      * @param k Kentt jota muokataan, toistaiseksi vain pvm muokattavana
      */
-    private void kasitteleMuutosSuoritukseen(TextField edit) {
+    private void kasitteleMuutosTietueeseen(TextField edit) {
         if (tietueKohdalla == null) return;
         String s = edit.getText();
-        int k = getFieldId(edit, apusuoritus.ekaKentta());
+        int k = getFieldId(edit, tietueKohdalla.ekaKentta());
         String virhe = tietueKohdalla.aseta(k, s);
         if (virhe != null) {
             Dialogs.setToolTipText(edit, virhe);
@@ -158,10 +158,9 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
     
     /**
      * @param edits Taulukko jossa on tarvittavat tekstikentt
-     * @param tietue Näytettävä suoritus
+     * @param tietue Nytettv suoritus
      */
     public static void naytaTietue(TextField[] edits, Tietue tietue) {
-        
         if (tietue == null) return;
         for (int k = tietue.ekaKentta(); k < tietue.getKenttia(); k++) {
             edits[k].setText(tietue.anna(k));
@@ -190,12 +189,12 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
      */
     public static<TYPE extends Tietue> TYPE kysyTietue(Stage modalityStage, TYPE oletus, int kentta) {
         return ModalController.<TYPE, TietueDialogController<TYPE>>showModal(
-                TietueDialogController.class.getResource("MuokkaaSuoritusta.fxml"),
+                TietueDialogController.class.getResource("TietueDialogView.fxml"),
                 "Treeni",
                 modalityStage, oletus,
                 ctrl -> ctrl.setKentta(kentta)
                 );
     }
-
+    
 }
 

@@ -15,26 +15,54 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@treenisovellus.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.TietueDialogController">
    <center>
-      <ScrollPane fx:id="panelSuoritus" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="panelTietue" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
          <content>
-            <GridPane fx:id="gridSuoritus" alignment="CENTER_RIGHT">
+            <GridPane fx:id="gridTietue" alignment="CENTER_RIGHT">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="300.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="430.0" minWidth="10.0" prefWidth="300.0" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Päivämäärä:">
+                  <Label text="Liikkeen nimi:" GridPane.rowIndex="1">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="editPvm" prefWidth="264.0" text="10.12.2022" GridPane.columnIndex="1" />
+                  <TextField  prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Sarjamäärä:" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Toistomäärä:" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Paino (kg):" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField  GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField  GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField  GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Liikkeen id:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField  GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </content>
@@ -73,4 +101,3 @@
       </VBox>
    </top>
 </BorderPane>
-

@@ -1,5 +1,6 @@
 package Treenisovellus;
 
+import static Treenisovellus.TietueDialogController.getFieldId;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.Collection;
@@ -20,6 +21,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import treeni.Liike;
@@ -38,6 +41,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     @FXML private ListChooser<Suoritus> chooserSuoritukset;
     @FXML StringGrid<Liike> tableLiikkeet;
     @FXML TextField editPvm;
+    @FXML private GridPane gridSuoritus;
     
     
     @FXML void handleDefaultCancel() {
@@ -111,15 +115,17 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
     
     /**
-     * Uuden liikkeen lisminen
+     * Uuden liikkeen lis‰‰minen
      */
     public void uusiLiike() {
         if (suoritusKohdalla == null) return;
-        Liike liike = new Liike();
-        liike.kirjaa();
-        liike.TaytaLiikeTiedoilla(suoritusKohdalla.getTreeniNro());
-        treeni.lisaa(liike);
-        hae(suoritusKohdalla.getTreeniNro());
+        Liike uusi =  new Liike(suoritusKohdalla.getTreeniNro());
+        uusi = TietueDialogController.kysyTietue(null, uusi, 0);
+        if (uusi == null) return;
+        uusi.kirjaa();
+        treeni.lisaa(uusi);
+        naytaLiikkeet(suoritusKohdalla);
+        tableLiikkeet.selectRow(1000);
         
     }
     
@@ -166,6 +172,26 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         }
 
     }
+    
+    private void muokkaaLiiketta() {
+        int r = tableLiikkeet.getRowNr();
+        if (r < 0) return;
+        Liike liik = tableLiikkeet.getObject();
+        if (liik == null) return;
+        int k = tableLiikkeet.getColumnNr() + liik.ekaKentta();
+        try {
+            liik = TietueDialogController.kysyTietue(null, liik.clone(), k);
+            if (liik == null) return;
+            treeni.korvaaTaiLisaa(liik);
+            naytaLiikkeet(suoritusKohdalla);
+            tableLiikkeet.selectRow(r);
+        } catch (CloneNotSupportedException e) {
+            // TODO: handle exception
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog("Ongelmia lis‰‰misess‰: " + e.getMessage());
+        }
+    }
+    
     
     /**
      * @param os Tulostusvirta
@@ -216,8 +242,15 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         panelSuoritus.setFitToHeight(true);
         chooserSuoritukset.clear();
         chooserSuoritukset.addSelectionListener(e -> naytaSuoritus());
-        TextField[] edts = {editPvm};
-        edits = edts;
+        edits = TietueDialogController.luoKentat(gridSuoritus, new Suoritus());
+        for (TextField edit: edits)  
+            if ( edit != null ) {  
+                edit.setEditable(false);  
+                edit.setOnMouseClicked(e -> { if ( e.getClickCount() > 1 ) muokkaa(getFieldId(e.getSource(),0)); });  
+                edit.focusedProperty().addListener((a,o,n) -> kentta = getFieldId(edit,kentta));
+                edit.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.F2 ) muokkaa(kentta);}); 
+            }
+
         
         int eka = apuliike.ekaKentta(); 
         int lkm = apuliike.getKenttia(); 
@@ -226,7 +259,10 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         tableLiikkeet.initTable(headings); 
         tableLiikkeet.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
         tableLiikkeet.setEditable(false); 
-        tableLiikkeet.setPlaceholder(new Label("Ei viel‰ harrastuksia")); 
+        tableLiikkeet.setPlaceholder(new Label("Ei viel‰ harrastuksia"));
+        tableLiikkeet.setOnMouseClicked( e -> { if ( e.getClickCount() > 1 ) muokkaaLiiketta(); } );
+        tableLiikkeet.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.F2 ) muokkaaLiiketta();}); 
+
         
     }
     
@@ -238,7 +274,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
      */
     public static Treeni avaaSuoritukset(Stage modalityStage, Treeni oletus) {
         return ModalController.<Treeni, SuorituksetController>showModal(SuorituksetController.class.getResource("Suoritukset.fxml"),
-                "Treenin lis‰ys",
+                "Treenin lisys",
                 modalityStage, oletus,
                 null 
             );
