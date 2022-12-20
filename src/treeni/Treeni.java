@@ -4,6 +4,7 @@
 package treeni;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -85,6 +86,18 @@ public class Treeni {
     public List<Liike> annaLiikkeet(Suoritus suoritus) {
         return liikkeet.annaLiikkeet(suoritus.getTreeniNro());
     }
+    
+    
+    /**
+     * @param hakuehto Hakutermi
+     * @param k indeksi
+     * @return hakutuloksen
+     * @throws SailoException Jos menee mönkään
+     */
+    public Collection<Suoritus> etsi(String hakuehto, int k) throws SailoException {
+        return suoritukset.etsi(hakuehto, k);
+    }
+    
     
     /**
      * @param nimi Hakemisto

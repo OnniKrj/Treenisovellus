@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import fi.jyu.mit.ohj2.WildChars;
+
 /**
  * @author Onni
  * @version 7.11.2022
@@ -147,6 +149,26 @@ public class Suoritukset implements Iterable<Suoritus>{
         }
         
     }
+    
+    
+    /**
+     * @param hakuehto Hakutermi
+     * @param k indeksi
+     * @return L asd
+     */
+    public Collection<Suoritus> etsi(String hakuehto, int k) {
+        String ehto = "*";
+        if ( hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto;
+        int hk = k;
+        if ( hk < 0 ) hk = 1;
+        Collection<Suoritus> loytyneet = new ArrayList<Suoritus>();
+        for (Suoritus suoritus : this) {
+            if (WildChars.onkoSamat(suoritus.anna(hk), ehto)) loytyneet.add(suoritus);
+        }
+        return loytyneet;
+    }
+    
+    
     
     /**
      * @param args Ei käytössä

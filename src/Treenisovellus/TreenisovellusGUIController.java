@@ -1,6 +1,10 @@
 package Treenisovellus;
 
+import java.awt.Desktop;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,6 +36,7 @@ public class TreenisovellusGUIController implements Initializable {
     
     @FXML private ListChooser<Suoritus> chooserSuoritukset;
     @FXML private GridPane gridSuoritus;
+    @FXML private TextField editPvm;
 
     
 
@@ -46,7 +51,7 @@ public class TreenisovellusGUIController implements Initializable {
         paivita();
     }
     
-    @FXML void handleVersio() {
+    @FXML void handleTietoja() {
         naytaVersio();
     }
     
@@ -70,7 +75,8 @@ public class TreenisovellusGUIController implements Initializable {
         
     private Treeni treeni;
     private Suoritus suoritusKohdalla;
-    private TextArea areaSuoritus = new TextArea(); // TODO: poista lopuksi
+    private TextField[] edits;
+    
     
     
     
@@ -129,6 +135,8 @@ public class TreenisovellusGUIController implements Initializable {
         suoritusKohdalla = chooserSuoritukset.getSelectedObject();
         if (suoritusKohdalla == null) return;
         
+        TietueDialogController.naytaTietue(edits, suoritusKohdalla);
+        
         
     }
     
@@ -160,11 +168,13 @@ public class TreenisovellusGUIController implements Initializable {
     
     
     private void alusta() {
-        panelSuoritus.setContent(areaSuoritus);
-        areaSuoritus.setFont(new Font("Courier New", 12));
+        edits = new TextField[]{editPvm};
         panelSuoritus.setFitToHeight(true);
         chooserSuoritukset.clear();
         chooserSuoritukset.addSelectionListener(e -> naytaSuoritus());
+        
+        if (suoritusKohdalla != null)
+            hae(suoritusKohdalla.getTreeniNro());
         
     }
     
@@ -172,7 +182,18 @@ public class TreenisovellusGUIController implements Initializable {
      * Nytetn sovelluksen tiedot.
      */
     public void naytaVersio() {
-        Dialogs.showMessageDialog("Viel ei osata katsoa versiota");
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2022s/ht/ontajoka#mtypuo4cyMgg");
+            desktop.browse(uri);
+        } catch (URISyntaxException e) {
+            return;
+            
+        } catch (IOException e) {
+            return;
+
+        }
+
         
     }
     
@@ -186,14 +207,14 @@ public class TreenisovellusGUIController implements Initializable {
     }
     
 
-    
+
     
     /**
      *  Nytetn suoritusten muokkaus ikkuna
      */
     public void muokkaaSuoritusta() {
         SuorituksetController.avaaSuoritukset(null, treeni);
-        //Dialogs.showMessageDialog("Ei pysty muokkaamaan aiempia suorituksia viel");
+        
     }
     
 
@@ -204,7 +225,6 @@ public class TreenisovellusGUIController implements Initializable {
     public void suljeSovellus() {
         Platform.exit();
         
-        //Dialogs.showMessageDialog("Viel ei pysty sulkemaan tst");
     }
     
     
@@ -217,7 +237,7 @@ public class TreenisovellusGUIController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        //avaa();
+        //
         
     }
     

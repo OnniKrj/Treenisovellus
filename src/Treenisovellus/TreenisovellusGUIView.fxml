@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane stylesheets="@treenisovellus.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.TreenisovellusGUIController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@treenisovellus.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.TreenisovellusGUIController">
    <top>
       <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Apua">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleVersio" text="Versio" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Versio" />
                   </items>
                 </Menu>
               </menus>
@@ -92,7 +92,7 @@
       </ScrollBorder>
    </left>
    <center>
-      <GridPane fx:id="gridSuoritukset" BorderPane.alignment="CENTER">
+      <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -105,15 +105,8 @@
                <font>
                   <Font size="20.0" />
                </font>
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
             </Label>
-            <TextField GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
-            </TextField>
+            <TextField fx:id="editPvm" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </center>

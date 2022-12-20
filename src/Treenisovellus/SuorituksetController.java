@@ -1,12 +1,15 @@
 package Treenisovellus;
 
 import static Treenisovellus.TietueDialogController.getFieldId;
+
+import java.awt.event.ActionEvent;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import fi.jyu.mit.fxgui.ComboBoxChooser;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
@@ -42,6 +45,9 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     @FXML StringGrid<Liike> tableLiikkeet;
     @FXML TextField editPvm;
     @FXML private GridPane gridSuoritus;
+    @FXML ComboBoxChooser<String> cbKentat;
+    @FXML TextField hakuehto;
+    
     
     
     @FXML void handleDefaultCancel() {
@@ -71,6 +77,12 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         tallenna();
     }
     
+    
+    @FXML
+    private void handleHakuehto() {
+        hae(0);
+    }
+    
     @FXML private ScrollPane panelSuoritus;
     
     
@@ -81,16 +93,43 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     private TextField[] edits;
     private static Liike apuliike = new Liike();
     private int kentta = 0;
+    private static Suoritus apusuoritus = new Suoritus();
     
     //TODO: uusi listChooser Liikkeet ikkunalle!!
    
     
     
-    private void hae(int tnro) {
+    private void hae(int tnr) {
+        int tnro = tnr;
+        if ( tnro <= 0 ) {
+            Suoritus kohdalla = suoritusKohdalla;
+            if ( kohdalla != null ) tnro = kohdalla.getTreeniNro();
+        }
         
-        //Collection<Suoritus> suoritukset;
+        int k = cbKentat.getSelectedIndex() + apusuoritus.ekaKentta();
+        String ehto = hakuehto.getText();
+        if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
+        
+        
         chooserSuoritukset.clear();
         
+        int index = 0;
+        Collection<Suoritus> suoritukset;
+        try {
+            suoritukset = treeni.etsi(ehto, k);
+            int i = 0;
+            for (Suoritus suoritus : suoritukset) {
+                if (suoritus.getTreeniNro() == tnro) index = i;
+                chooserSuoritukset.add(""+suoritus.getTreeniNro(), suoritus);
+                i++;
+            }
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog("Suorituksen hakemisessa ongelmia! " + e.getMessage());
+        }
+        chooserSuoritukset.setSelectedIndex(index);
+        
+        
+        /*
         int index = 0;
         for (int i = 0; i < treeni.getSuorituksia(); i++) {
             Suoritus suoritus = treeni.annaSuoritus(i);
@@ -98,6 +137,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
             chooserSuoritukset.add(""+suoritus.getTreeniNro(), suoritus);
         }
         chooserSuoritukset.setSelectedIndex(index);
+        */
     }
     
     private void uusiSuoritus() {
@@ -263,7 +303,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         tableLiikkeet.setOnMouseClicked( e -> { if ( e.getClickCount() > 1 ) muokkaaLiiketta(); } );
         tableLiikkeet.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.F2 ) muokkaaLiiketta();}); 
 
-        
     }
     
     
@@ -286,6 +325,5 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         
     }
     
-
 
 }

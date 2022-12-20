@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import fi.jyu.mit.fxgui.ListChooser?>
+<?import fi.jyu.mit.fxgui.ComboBoxChooser?>
 <?import fi.jyu.mit.fxgui.ScrollBorder?>
 <?import fi.jyu.mit.fxgui.StringGrid?>
 <?import javafx.geometry.Insets?>
@@ -13,6 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane stylesheets="@treenisovellus.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Treenisovellus.SuorituksetController">
@@ -54,45 +56,115 @@
       </HBox>
    </bottom>
    <left>
-      <ScrollBorder BorderPane.alignment="CENTER">
-         <children>
-            <ListChooser fx:id="chooserSuoritukset" prefWidth="150.0" rivit="Treeni 013&#10;Treeni 012&#10;Treeni 011&#10;Treeni 010&#10;Treeni 009" />
-         </children>
-      </ScrollBorder>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <ScrollBorder>
+               <children>
+                  <ListChooser fx:id="chooserSuoritukset" prefWidth="150.0" rivit="Treeni 013&#10;Treeni 012&#10;Treeni 011&#10;Treeni 010&#10;Treeni 009" />
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+            </ScrollBorder>
+         </center>
+         <top>
+            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+               		<Label alignment="CENTER" maxWidth="300" text="Hakuehto">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                     <ComboBoxChooser fx:id="cbKentat" onAction="#handleHakuehto" rivit="pvm&#10;"/>
+                     <TextField fx:id="hakuehto" onKeyReleased="#handleHakuehto"  />
+                  <Label text="Suoritukset">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+            </VBox>
+         </top>
+      </BorderPane>
    </left>
    <center>
       <ScrollPane fx:id="panelSuoritus" fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
-            <GridPane fx:id="gridSuoritus">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="Päivämäärä:">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <GridPane.margin>
+            <BorderPane>
+               <center>
+                  <GridPane fx:id="gridSuoritus">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Päivämäärä:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="editPvm" text="1.1.2022" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                     </children>
+                     <BorderPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="editPvm" text="1.1.2022" GridPane.columnIndex="1">
-                     <GridPane.margin>
+                     </BorderPane.margin>
+                  </GridPane>
+               </center>
+               <top>
+                  <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Tiedot">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <BorderPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin></TextField>
-               </children>
-            </GridPane>
+                     </BorderPane.margin>
+                  </VBox>
+               </top>
+            </BorderPane>
          </content>
       </ScrollPane>
    </center>
    <right>
-      <StringGrid fx:id="tableLiikkeet" rivit="Liikkeen id|Nimi|Sarjat|Toistot|Paino&#10;1|Kyyykky|3|8|70&#10;2|Pystypunnerrus|3|8|40&#10;3|Penkkipunnerrus|3&#10;4|Ojentajat&#10;">
+      <BorderPane>
          <BorderPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </BorderPane.margin></StringGrid>
+         </BorderPane.margin>
+         <center>
+            <StringGrid fx:id="tableLiikkeet" rivit="Liikkeen id|Nimi|Sarjat|Toistot|Paino&#10;1|Kyyykky|3|8|70&#10;2|Pystypunnerrus|3|8|40&#10;3|Penkkipunnerrus|3&#10;4|Ojentajat&#10;">
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin></StringGrid>
+         </center>
+         <top>
+            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Liikkeet">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+            </VBox>
+         </top>
+      </BorderPane>
    </right>
 </BorderPane>
