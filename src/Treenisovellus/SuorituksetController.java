@@ -2,8 +2,12 @@ package Treenisovellus;
 
 import static Treenisovellus.TietueDialogController.getFieldId;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
@@ -62,6 +66,18 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     void handleMuokkaa() {
         muokkaa(kentta);
     }
+    
+    
+    @FXML
+    void handleTulosta() {
+        TulostusController tulostusCtrl = TulostusController.tulosta(null); 
+        tulostaValitut(tulostusCtrl.getTextArea()); 
+    }
+    
+    @FXML void handleTietoja() {
+        naytaVersio();
+    }
+
     
     @FXML void handleLisaaUusiSuoritus() {
         uusiSuoritus();
@@ -326,6 +342,46 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         tableLiikkeet.setOnMouseClicked( e -> { if ( e.getClickCount() > 1 ) muokkaaLiiketta(); } );
         tableLiikkeet.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.F2 ) muokkaaLiiketta();}); 
     }
+    
+    
+    
+    /**
+     * Nytetn sovelluksen tiedot.
+     */
+    public void naytaVersio() {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2022s/ht/ontajoka#mtypuo4cyMgg");
+            desktop.browse(uri);
+        } catch (URISyntaxException e) {
+            return;
+            
+        } catch (IOException e) {
+            return;
+
+        }
+    }
+    
+    
+    /**
+     * Tulostaa listassa olevat jäsenet tekstialueeseen
+     * @param text alue johon tulostetaan
+     */
+    public void tulostaValitut(TextArea text) {
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(text)) {
+            os.println("Tulostetaan kaikki suoritukset");
+            Collection<Suoritus> suoritukset = treeni.etsi("", -1); 
+            for (Suoritus suoritus : suoritukset) { 
+                tulosta(os, suoritus);
+                os.println("\n\n");
+            }
+        } catch (SailoException ex) { 
+            Dialogs.showMessageDialog("Suorituksen hakemisessa ongelmia! " + ex.getMessage()); 
+
+        }
+
+    }
+
     
     
     /**

@@ -181,6 +181,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#handlePoistaLiike" text="Poista liike" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Lisää...">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Versio" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
