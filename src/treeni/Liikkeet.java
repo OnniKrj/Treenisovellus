@@ -46,6 +46,30 @@ public class Liikkeet implements Iterable<Liike> {
      * 
      * @param liike Lisättävän liikkeen viite
      * @throws SailoException Virhe, jos tietorakenne on jo täynnä
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException, CloneNotSupportedException
+     * #PACKAGEIMPORT
+     * #import java.util.*
+     * Liikkeet liikkeet = new Liikkeet();
+     * Liike liike1 = new Liike();
+     * Liike liike2 = new Liike();
+     * liike1.kirjaa();
+     * liike2.kirjaa();
+     * liikkeet.getLkm() === 0;
+     * liikkeet.korvaaTaiLisaa(liike1);
+     * liikkeet.getLkm() === 1;
+     * liikkeet.korvaaTaiLisaa(liike2);
+     * liikkeet.getLkm() === 2;
+     * Liike liike3 = liike1.clone();
+     * liike3.aseta(3, "kkk");
+     * Iterator<Liike> i2 = liikkeet.iterator();
+     * i2.next() === liike1;
+     * Liike l = i2.next();
+     * l === liike3;
+     * l == liike3 === true;
+     * l == liike1 === false;
+     * </pre>
      */
     public void korvaaTaiLisaa(Liike liike) throws SailoException {
         int id = liike.getTreeniNro();
@@ -66,6 +90,23 @@ public class Liikkeet implements Iterable<Liike> {
     /**
      * @param liike a
      * @return b
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * #import java.io.File
+     * Liikkeet liikkeet = new Liikkeet();
+     * Liike dippi21 = new Liike(); dippi21.TaytaTreeniTiedoilla(2);
+     * Liike dippi11 = new Liike(); dippi21.TaytaTreeniTiedoilla(1);
+     * Liike dippi22 = new Liike(); dippi21.TaytaTreeniTiedoilla(2);
+     * Liike dippi11 = new Liike(); dippi21.TaytaTreeniTiedoilla(1);
+     * Liike dippi23 = new Liike(); dippi21.TaytaTreeniTiedoilla(2);
+     * liikkeet.lisaa(dippi21);
+     * liikkeet.lisaa(dippi11);
+     * liikkeet.lisaa(dippi22);
+     * liikkeet.lisaa(dippi12);
+     * liikkeet.poista(dippi23) === false; liikkeet.getLkm() === 4;
+     * liikkeet.poista(dippi11) === true;
+     * </pre>
      */
     public boolean poista(Liike liike) {
         boolean ret = alkiot.remove(liike);

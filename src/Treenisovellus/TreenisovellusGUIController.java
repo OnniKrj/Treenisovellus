@@ -54,10 +54,6 @@ public class TreenisovellusGUIController implements Initializable {
         muokkaaSuoritusta();
     }
     
-    @FXML
-    void handleTulosta() {
-        //
-    }
     
     
     @FXML void handlePoistuEtusivulta() {

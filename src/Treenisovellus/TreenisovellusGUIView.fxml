@@ -20,7 +20,6 @@
                 <Menu mnemonicParsing="false" text="Muokkaa">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaSuoritusta" text="Suoritukset" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Apua">
