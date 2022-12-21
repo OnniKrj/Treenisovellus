@@ -218,8 +218,9 @@ public class Suoritus implements Cloneable, Tietue {
      * @return kentän sisältö merkkijonona
      */
     public String getAvain(int k) {
+        
         switch ( k ) {
-        case 0: return "" + treeniNro;
+        case 0: return "" + Mjonot.fmt(treeniNro, 10);
         case 1: return "" + pvm;
         default: return "asd";
         }
