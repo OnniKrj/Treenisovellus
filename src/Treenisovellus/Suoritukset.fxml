@@ -75,7 +75,7 @@
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                     <ComboBoxChooser fx:id="cbKentat" onAction="#handleHakuehto" rivit="Päivämäärä&#10;Treeninro&#10;">
+                     <ComboBoxChooser fx:id="cbKentat" onAction="#handleHakuehto" rivit="Treeninro&#10;Päivämäärä&#10;">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin></ComboBoxChooser>

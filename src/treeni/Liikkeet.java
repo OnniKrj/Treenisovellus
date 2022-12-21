@@ -34,6 +34,7 @@ public class Liikkeet implements Iterable<Liike> {
     
     /**
      * @param liike Lisättävä liike
+     * 
      */
     public void lisaa(Liike liike) {
         alkiot.add(liike);
@@ -43,7 +44,7 @@ public class Liikkeet implements Iterable<Liike> {
     
     /**
      * 
-     * @param liike Lisättävä liike
+     * @param liike Lisättävän liikkeen viite
      * @throws SailoException Virhe, jos tietorakenne on jo täynnä
      */
     public void korvaaTaiLisaa(Liike liike) throws SailoException {

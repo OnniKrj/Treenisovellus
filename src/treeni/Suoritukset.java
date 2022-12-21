@@ -59,7 +59,7 @@ public class Suoritukset implements Iterable<Suoritus>{
      * suoritukset.anna(3) === treeni1; #THROWS IndexOutOfBoundsException 
      * suoritukset.lisaa(treeni1); suoritukset.getLkm() === 4;
      * suoritukset.lisaa(treeni1); suoritukset.getLkm() === 5;
-     * suoritukset.lisaa(treeni1);  #THROWS SailoException
+     * suoritukset.lisaa(treeni1);
      * </pre>
      */
     public void lisaa(Suoritus suoritus) throws SailoException {
