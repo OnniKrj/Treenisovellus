@@ -112,7 +112,7 @@ public class Liike implements Cloneable, Tietue {
      */
     @Override
     public int getKenttia() {
-        return 5;
+        return 4;
     }
 
     
@@ -134,11 +134,10 @@ public class Liike implements Cloneable, Tietue {
     @Override
     public String getKysymys(int k) {
         switch ( k ) {
-        case 0: return "Liikkeen id";
-        case 1: return "Liikkeen nimi";
-        case 2: return "Sarjat";
-        case 3: return "Toistot";
-        case 4: return "Paino";
+        case 0: return "Liikkeen nimi";
+        case 1: return "Sarjat";
+        case 2: return "Toistot";
+        case 3: return "Paino";
         default: return "Asd";
 
         }
@@ -153,11 +152,10 @@ public class Liike implements Cloneable, Tietue {
     @Override
     public String anna(int k) {
         switch ( k ) {
-        case 0: return "" + liikeNro;
-        case 1: return "" + liikeNimi;
-        case 2: return "" + sarjaMaara;
-        case 3: return "" + toistoMaara;
-        case 4: return "" + paino;
+        case 0: return "" + liikeNimi;
+        case 1: return "" + sarjaMaara;
+        case 2: return "" + toistoMaara;
+        case 3: return "" + paino;
         default: return "Asd";
 
         }
@@ -289,18 +287,15 @@ public class Liike implements Cloneable, Tietue {
         StringBuffer sb = new StringBuffer(st);
         switch (k) {
         case 0:
-            setLiikeNro(Mjonot.erota(sb, '|', getLiikeNro()));
-            return null;
-        case 1:
             liikeNimi = Mjonot.erota(sb, '|', getLiikeNimi());
             return null;
-        case 2:
+        case 1:
             sarjaMaara = Mjonot.erota(sb, '|', getSarjaMaara());
             return null;
-        case 3:
+        case 2:
             toistoMaara = Mjonot.erota(sb, '|', getToistoMaara());
             return null;
-        case 4:
+        case 3:
             paino = Mjonot.erota(sb, '|', getPaino());
             return null;
             
