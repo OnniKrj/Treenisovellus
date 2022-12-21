@@ -323,6 +323,12 @@ public class Suoritus implements Cloneable, Tietue {
     
     }
 
+    @Override
+    public void tallenna() throws SailoException {
+        // TODO Auto-generated method stub
+        
+    }
+
  
 
 }

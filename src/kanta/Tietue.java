@@ -1,5 +1,7 @@
 package kanta;
 
+import treeni.SailoException;
+
 /**
  * @author Onni
  * @version 19.12.2022
@@ -37,7 +39,10 @@ public interface Tietue {
     public abstract String anna(int k);
     
     
-    
+    /**
+     * @throws SailoException a
+     */
+    public abstract void tallenna() throws SailoException;
     
     /**
      * @param k a 

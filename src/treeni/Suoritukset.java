@@ -150,6 +150,7 @@ public class Suoritukset implements Iterable<Suoritus>{
             throw new SailoException("Tiedosto " + ftied.getAbsolutePath() + " ei aukea");
         }
         
+        muutettu = false;
     }
     
     

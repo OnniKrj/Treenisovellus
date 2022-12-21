@@ -276,7 +276,6 @@ public class Liike implements Cloneable, Tietue {
     public static void main(String[] args) {
         Liike liike = new Liike();
         liike.TaytaLiikeTiedoilla(2);
-        liike.kirjaa();
         liike.tulosta(System.out);
         
     }
@@ -287,21 +286,27 @@ public class Liike implements Cloneable, Tietue {
         StringBuffer sb = new StringBuffer(st);
         switch (k) {
         case 0:
-            liikeNimi = Mjonot.erota(sb, '|', getLiikeNimi());
+            liikeNimi = Mjonot.erota(sb, '§', getLiikeNimi());
             return null;
         case 1:
-            sarjaMaara = Mjonot.erota(sb, '|', getSarjaMaara());
+            sarjaMaara = Mjonot.erota(sb, '§', getSarjaMaara());
             return null;
         case 2:
-            toistoMaara = Mjonot.erota(sb, '|', getToistoMaara());
+            toistoMaara = Mjonot.erota(sb, '§', getToistoMaara());
             return null;
         case 3:
-            paino = Mjonot.erota(sb, '|', getPaino());
+            paino = Mjonot.erota(sb, '§', getPaino());
             return null;
             
         default:
             return "Asd";
         }
 
+    }
+
+    @Override
+    public void tallenna() throws SailoException {
+        // TODO Auto-generated method stub
+        
     }
 }

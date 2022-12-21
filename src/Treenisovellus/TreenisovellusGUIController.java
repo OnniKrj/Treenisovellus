@@ -34,7 +34,6 @@ import treeni.Treeni;
  */
 public class TreenisovellusGUIController implements Initializable {
     
-    @FXML private ListChooser<Suoritus> chooserSuoritukset;
     @FXML private GridPane gridSuoritus;
     @FXML private TextField editPvm;
 
@@ -46,10 +45,6 @@ public class TreenisovellusGUIController implements Initializable {
        
     }
     
-    @FXML
-    void handlePaivitaLista() {
-        paivita();
-    }
     
     @FXML void handleTietoja() {
         naytaVersio();
@@ -74,8 +69,6 @@ public class TreenisovellusGUIController implements Initializable {
     //================================================================================
         
     private Treeni treeni;
-    private Suoritus suoritusKohdalla;
-    private TextField[] edits;
     
     
     
@@ -93,11 +86,11 @@ public class TreenisovellusGUIController implements Initializable {
     private String lueTiedosto(String nimi) {
         try {
             treeni.lueTiedostosta(nimi);
-            hae(0);
+            
             return null;
             
         } catch (SailoException e) {
-            hae(0);
+            
             String virhe = e.getMessage(); 
             if ( virhe != null ) Dialogs.showMessageDialog(virhe);
             return virhe;
@@ -115,43 +108,9 @@ public class TreenisovellusGUIController implements Initializable {
     }
     
     
-    private void hae(int tnro) {
-        chooserSuoritukset.clear();
-        
-        int index = 0;
-        for (int i = 0; i < treeni.getSuorituksia(); i++) {
-            Suoritus suoritus = treeni.annaSuoritus(i);
-            if (suoritus.getTreeniNro() == tnro) index = i;
-            chooserSuoritukset.add(""+suoritus.getTreeniNro(), suoritus);
-        }
-        chooserSuoritukset.setSelectedIndex(index);
-    }
-    
-    
-    
 
     
-    private void naytaSuoritus() {
-        suoritusKohdalla = chooserSuoritukset.getSelectedObject();
-        if (suoritusKohdalla == null) return;
-        
-        TietueDialogController.naytaTietue(edits, suoritusKohdalla);
-        
-        
-    }
     
-    /**
-     * Uuden liikkeen lisminen
-     */
-    public void uusiLiike() {
-        if (suoritusKohdalla == null) return;
-        Liike liike = new Liike();
-        liike.kirjaa();
-        liike.TaytaLiikeTiedoilla(suoritusKohdalla.getTreeniNro());
-        treeni.lisaa(liike);
-        hae(suoritusKohdalla.getTreeniNro());
-        
-    }
     
     /**
      * @param os Tulostusvirta
@@ -167,16 +126,6 @@ public class TreenisovellusGUIController implements Initializable {
     }
     
     
-    private void alusta() {
-        edits = new TextField[]{editPvm};
-        panelSuoritus.setFitToHeight(true);
-        chooserSuoritukset.clear();
-        chooserSuoritukset.addSelectionListener(e -> naytaSuoritus());
-        
-        if (suoritusKohdalla != null)
-            hae(suoritusKohdalla.getTreeniNro());
-        
-    }
     
     /**
      * Nytetn sovelluksen tiedot.
@@ -197,14 +146,6 @@ public class TreenisovellusGUIController implements Initializable {
         
     }
     
-    /**
-     * Nappi jolla pivitetn psivun nkym // TODO: muuta oikeaksi pivitys -napiksi, nyt se virheellisesti lis uusia toteutuksia
-     */
-    public void paivita() {
-        alusta();
-        //uusiSuoritus();
-        //uusiLiike();
-    }
     
 
 

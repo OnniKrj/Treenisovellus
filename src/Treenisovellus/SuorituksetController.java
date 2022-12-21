@@ -138,15 +138,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         chooserSuoritukset.setSelectedIndex(index);
         
         
-        /*
-        int index = 0;
-        for (int i = 0; i < treeni.getSuorituksia(); i++) {
-            Suoritus suoritus = treeni.annaSuoritus(i);
-            if (suoritus.getTreeniNro() == tnro) index = i;
-            chooserSuoritukset.add(""+suoritus.getTreeniNro(), suoritus);
-        }
-        chooserSuoritukset.setSelectedIndex(index);
-        */
     }
     
     private void uusiSuoritus() {
@@ -311,10 +302,10 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     
     private void alusta() {
         
-        panelSuoritus.setFitToHeight(true);
+        
         chooserSuoritukset.clear();
         chooserSuoritukset.addSelectionListener(e -> naytaSuoritus());
-        edits = TietueDialogController.luoKentat(gridSuoritus, new Suoritus());
+        edits = TietueDialogController.luoKentat(gridSuoritus, apusuoritus);
         for (TextField edit: edits)  
             if ( edit != null ) {  
                 edit.setEditable(false);  
@@ -334,7 +325,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         tableLiikkeet.setPlaceholder(new Label("Ei vielä harrastuksia"));
         tableLiikkeet.setOnMouseClicked( e -> { if ( e.getClickCount() > 1 ) muokkaaLiiketta(); } );
         tableLiikkeet.setOnKeyPressed( e -> {if ( e.getCode() == KeyCode.F2 ) muokkaaLiiketta();}); 
-
     }
     
     
@@ -345,7 +335,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
      */
     public static Treeni avaaSuoritukset(Stage modalityStage, Treeni oletus) {
         return ModalController.<Treeni, SuorituksetController>showModal(SuorituksetController.class.getResource("Suoritukset.fxml"),
-                "Treenin lisys",
+                "Treenin lisäys",
                 modalityStage, oletus,
                 null 
             );

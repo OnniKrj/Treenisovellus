@@ -141,8 +141,8 @@ public class TietueDialogController<TYPE extends Tietue> implements ModalControl
     
     
     /*
-     * Ksitelln suoritukseen tullut muutos
-     * @param k Kentt jota muokataan, toistaiseksi vain pvm muokattavana
+     * K‰sitell‰‰n suoritukseen tullut muutos
+     * @param k Kentt‰ jota muokataan, toistaiseksi vain pvm muokattavana
      */
     private void kasitteleMuutosTietueeseen(TextField edit) {
         if (tietueKohdalla == null) return;
