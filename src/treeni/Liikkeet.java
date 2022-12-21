@@ -63,6 +63,37 @@ public class Liikkeet implements Iterable<Liike> {
     
     
     /**
+     * @param liike a
+     * @return b
+     */
+    public boolean poista(Liike liike) {
+        boolean ret = alkiot.remove(liike);
+        if (ret) muutettu = true;
+        return ret;
+    }
+    
+    
+    
+    /**
+     * @param treeniNro a
+     * @return b
+     */
+    public int poistaSuorituksenLiikkeet(int treeniNro) {
+        int n = 0;
+        for (Iterator<Liike> it = alkiot.iterator(); it.hasNext();) {
+            Liike liike = it.next();
+            if ( liike.getTreeniNro() == treeniNro ) {
+                it.remove();
+                n++;
+            }
+        }
+        if (n > 0) muutettu = true;
+        return n;
+    }
+    
+    
+    
+    /**
      * @param treeninro viite treeniin
      * @return tietorakenne jossa on viitteet löydettyihin liikkeisiin
      * @example

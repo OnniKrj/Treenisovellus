@@ -11,7 +11,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -161,13 +163,40 @@ public class Suoritukset implements Iterable<Suoritus>{
         if ( hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto;
         int hk = k;
         if ( hk < 0 ) hk = 1;
-        Collection<Suoritus> loytyneet = new ArrayList<Suoritus>();
+        List<Suoritus> loytyneet = new ArrayList<Suoritus>();
         for (Suoritus suoritus : this) {
             if (WildChars.onkoSamat(suoritus.anna(hk), ehto)) loytyneet.add(suoritus);
         }
+        Collections.sort(loytyneet, new Suoritus.Vertailija(hk));
         return loytyneet;
     }
+
     
+    /**
+     * @param id Haettavan suorituksen id
+     * @return tulos
+     */
+    public int etsiId(int id) {
+        for (int i = 0; i < lkm; i++)
+            if (id == alkiot[i].getTreeniNro()) return i;
+        return -1;
+    }
+    
+    
+    /**
+     * @param id a
+     * @return b
+     */
+    public int poista(int id) {
+        int ind = etsiId(id);
+        if (ind < 0) return 0;
+        lkm--;
+        for (int i = ind; i < lkm; i++)
+            alkiot[i] = alkiot[i + 1];
+        alkiot[lkm] = null;
+        muutettu = true;
+        return 1;
+    }
     
     
     /**

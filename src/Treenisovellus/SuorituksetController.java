@@ -83,6 +83,17 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         hae(0);
     }
     
+    
+    @FXML
+    void handlePoistaLiike() {
+        poistaLiike();
+    }
+    
+    @FXML
+    void handlePoistaSuoritus() {
+        poistaSuoritus();
+    }
+    
     @FXML private ScrollPane panelSuoritus;
     
     
@@ -95,9 +106,7 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     private int kentta = 0;
     private static Suoritus apusuoritus = new Suoritus();
     
-    //TODO: uusi listChooser Liikkeet ikkunalle!!
    
-    
     
     private void hae(int tnr) {
         int tnro = tnr;
@@ -276,6 +285,29 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
     }
 
     
+    private void poistaLiike() {
+        int rivi = tableLiikkeet.getRowNr();
+        if ( rivi < 0 ) return;
+        Liike liike = tableLiikkeet.getObject();
+        if (liike == null) return;
+        treeni.poistaLiike(liike);
+        naytaLiikkeet(suoritusKohdalla);
+        int liikkeita = tableLiikkeet.getItems().size();
+        if (rivi >= liikkeita) rivi = liikkeita -1;
+        tableLiikkeet.getFocusModel().focus(rivi);
+        tableLiikkeet.getSelectionModel().select(rivi);
+        
+    }
+    
+    private void poistaSuoritus() {
+        Suoritus suoritus = suoritusKohdalla;
+        if (suoritus == null) return;
+        if (!Dialogs.showQuestionDialog("Poisto", "Poistetaanko suoritus: " + suoritus.getTreeniNro(), "Kyllä","Ei")) return;
+        treeni.poista(suoritus);
+        int index = chooserSuoritukset.getSelectedIndex();
+        hae(0);
+        chooserSuoritukset.setSelectedIndex(index);
+    }
     
     private void alusta() {
         
@@ -324,6 +356,6 @@ public class SuorituksetController implements ModalControllerInterface<Treeni>, 
         this.treeni = arg0;
         
     }
-    
+
 
 }

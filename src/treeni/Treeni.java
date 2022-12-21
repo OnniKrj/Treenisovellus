@@ -60,6 +60,26 @@ public class Treeni {
     }
     
     
+    /**
+     * @param suoritus a
+     * @return b
+     */
+    public int poista(Suoritus suoritus) {
+        if (suoritus == null) return 0;
+        int ret = suoritukset.poista(suoritus.getTreeniNro());
+        liikkeet.poistaSuorituksenLiikkeet(suoritus.getTreeniNro());
+        return ret;
+    }
+    
+    
+    /**
+     * @param liike a
+     */
+    public void poistaLiike(Liike liike) {
+        liikkeet.poista(liike);
+    }
+    
+    
     
     /**
      * @return Suorituksien lukum‰‰r‰

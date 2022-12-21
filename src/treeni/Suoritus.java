@@ -5,6 +5,7 @@ package treeni;
 
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 import fi.jyu.mit.ohj2.Mjonot;
@@ -188,6 +189,39 @@ public class Suoritus implements Cloneable, Tietue {
             break;
         }
         return null;
+    }
+    
+    
+    /**
+     * Toteutus hakutulosten vertailua varten
+     * @author Onni
+     * @version 21.12.2022
+     */
+    public static class Vertailija implements Comparator<Suoritus> {
+        private int k;
+        
+        @SuppressWarnings("javadoc")
+        public Vertailija(int k) {
+            this.k = k;
+        }
+        
+        @Override
+        public int compare(Suoritus suoritus1, Suoritus suoritus2) {
+            return suoritus1.getAvain(k).compareToIgnoreCase(suoritus2.getAvain(k));
+        }
+    }
+    
+    
+    /**
+     * Antaa k:n sisällön merkkijonona
+     * @param k Momemnko kentän sisältö palautetaan
+     * @return kentän sisältö merkkijonona
+     */
+    public String getAvain(int k) {
+        switch ( k ) {
+        case 0: return "" + pvm;
+        default: return "asd";
+        }
     }
     
     
