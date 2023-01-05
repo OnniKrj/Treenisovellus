@@ -50,21 +50,19 @@ public class Liikkeet implements Iterable<Liike> {
      * <pre name="test">
      * #THROWS SailoException, CloneNotSupportedException
      * #PACKAGEIMPORT
-     * #import java.util.*
+     * #import java.util.*;
      * Liikkeet liikkeet = new Liikkeet();
-     * Liike liike1 = new Liike();
-     * Liike liike2 = new Liike();
-     * liike1.kirjaa();
-     * liike2.kirjaa();
+     * Liike liike1 = new Liike(), liike2 = new Liike();
+     * liike1.kirjaa(); liike2.kirjaa();
      * liikkeet.getLkm() === 0;
-     * liikkeet.korvaaTaiLisaa(liike1);
-     * liikkeet.getLkm() === 1;
-     * liikkeet.korvaaTaiLisaa(liike2);
-     * liikkeet.getLkm() === 2;
+     * liikkeet.korvaaTaiLisaa(liike1); liikkeet.getLkm() === 1;
+     * liikkeet.korvaaTaiLisaa(liike2); liikkeet.getLkm() === 2;
      * Liike liike3 = liike1.clone();
      * liike3.aseta(3, "kkk");
      * Iterator<Liike> i2 = liikkeet.iterator();
      * i2.next() === liike1;
+     * liikkeet.korvaaTaiLisaa(liike3); liikkeet.getLkm() === 2;
+     * i2 = liikkeet.iterator();
      * Liike l = i2.next();
      * l === liike3;
      * l == liike3 === true;
@@ -93,19 +91,22 @@ public class Liikkeet implements Iterable<Liike> {
      * @example
      * <pre name="test">
      * #THROWS SailoException
-     * #import java.io.File
+     * #import java.io.File;
      * Liikkeet liikkeet = new Liikkeet();
-     * Liike dippi21 = new Liike(); dippi21.TaytaTreeniTiedoilla(2);
-     * Liike dippi11 = new Liike(); dippi21.TaytaTreeniTiedoilla(1);
-     * Liike dippi22 = new Liike(); dippi21.TaytaTreeniTiedoilla(2);
-     * Liike dippi11 = new Liike(); dippi21.TaytaTreeniTiedoilla(1);
-     * Liike dippi23 = new Liike(); dippi21.TaytaTreeniTiedoilla(2);
+     * Liike dippi21 = new Liike(); dippi21.TaytaLiikeTiedoilla(2);
+     * Liike dippi11 = new Liike(); dippi11.TaytaLiikeTiedoilla(1);
+     * Liike dippi22 = new Liike(); dippi22.TaytaLiikeTiedoilla(2);
+     * Liike dippi12 = new Liike(); dippi12.TaytaLiikeTiedoilla(1);
+     * Liike dippi23 = new Liike(); dippi23.TaytaLiikeTiedoilla(2);
      * liikkeet.lisaa(dippi21);
      * liikkeet.lisaa(dippi11);
      * liikkeet.lisaa(dippi22);
      * liikkeet.lisaa(dippi12);
-     * liikkeet.poista(dippi23) === false; liikkeet.getLkm() === 4;
-     * liikkeet.poista(dippi11) === true;
+     * liikkeet.poista(dippi23) === false ; liikkeet.getLkm() === 4;
+     * liikkeet.poista(dippi11) === true; liikkeet.getLkm() === 3;
+     * List<Liike> l = liikkeet.annaLiikkeet(1);
+     * l.size() === 1;
+     * l.get(0) === dippi12;
      * </pre>
      */
     public boolean poista(Liike liike) {
@@ -119,6 +120,27 @@ public class Liikkeet implements Iterable<Liike> {
     /**
      * @param treeniNro a
      * @return b
+     * @example
+     * <pre name="test">
+     * Liikkeet liikkeet = new Liikkeet();
+     * Liike dippi21 = new Liike(); dippi21.TaytaLiikeTiedoilla(2);
+     * Liike dippi11 = new Liike(); dippi11.TaytaLiikeTiedoilla(1);
+     * Liike dippi22 = new Liike(); dippi22.TaytaLiikeTiedoilla(2);
+     * Liike dippi12 = new Liike(); dippi12.TaytaLiikeTiedoilla(1);
+     * Liike dippi23 = new Liike(); dippi23.TaytaLiikeTiedoilla(2);
+     * liikkeet.lisaa(dippi21);
+     * liikkeet.lisaa(dippi11);
+     * liikkeet.lisaa(dippi22);
+     * liikkeet.lisaa(dippi12);
+     * liikkeet.lisaa(dippi23);
+     * liikkeet.poistaSuorituksenLiikkeet(2) === 3; liikkeet.getLkm() === 2;
+     * liikkeet.poistaSuorituksenLiikkeet(3) === 0; liikkeet.getLkm() === 2;
+     * List<Liike> l = liikkeet.annaLiikkeet(2);
+     * l.size() === 0;
+     * l = liikkeet.annaLiikkeet(1);
+     * l.get(0) === dippi11;
+     * l.get(1) === dippi12;
+     * </pre>
      */
     public int poistaSuorituksenLiikkeet(int treeniNro) {
         int n = 0;
@@ -139,6 +161,27 @@ public class Liikkeet implements Iterable<Liike> {
      * @param treeninro viite treeniin
      * @return tietorakenne jossa on viitteet löydettyihin liikkeisiin
      * @example
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * Liikkeet liikkeet = new Liikkeet();
+     * Liike dippi21 = new Liike(); liikkeet.lisaa(dippi21);
+     * Liike dippi11 = new Liike(); liikkeet.lisaa(dippi11);
+     * Liike dippi22 = new Liike(); liikkeet.lisaa(dippi22);
+     * Liike dippi12 = new Liike(); liikkeet.lisaa(dippi12);
+     * Liike dippi23 = new Liike(); liikkeet.lisaa(dippi23);
+     * Liike dippi51 = new Liike(); liikkeet.lisaa(dippi51);
+     * List<Liike> loytyneet;
+     * loytyneet = liikkeet.annaLiikkeet(3);
+     * loytyneet.size() === 0; 
+     * loytyneet = liikkeet.annaLiikkeet(1);
+     * loytyneet.size() === 2; 
+     * loytyneet.get(0) == dippi11 === true;
+     * loytyneet.get(1) == dippi12 === true;
+     * loytyneet = liikkeet.annaLiikkeet(5);
+     * loytyneet.size() === 1; 
+     * loytyneet.get(0) == dippi51 === true;
+     * </pre>
      */
     public List<Liike> annaLiikkeet(int treeninro) {
         List<Liike> loydetyt = new ArrayList<Liike>();
