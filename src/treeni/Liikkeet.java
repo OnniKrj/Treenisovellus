@@ -146,7 +146,7 @@ public class Liikkeet implements Iterable<Liike> {
         int n = 0;
         for (Iterator<Liike> it = alkiot.iterator(); it.hasNext();) {
             Liike liike = it.next();
-            if ( liike.getTreeniNro() == treeniNro ) {
+            if ( liike.getLiikeNro() == treeniNro ) {
                 it.remove();
                 n++;
             }
@@ -165,12 +165,12 @@ public class Liikkeet implements Iterable<Liike> {
      * <pre name="test">
      * #import java.util.*;
      * Liikkeet liikkeet = new Liikkeet();
-     * Liike dippi21 = new Liike(); liikkeet.lisaa(dippi21);
-     * Liike dippi11 = new Liike(); liikkeet.lisaa(dippi11);
-     * Liike dippi22 = new Liike(); liikkeet.lisaa(dippi22);
-     * Liike dippi12 = new Liike(); liikkeet.lisaa(dippi12);
-     * Liike dippi23 = new Liike(); liikkeet.lisaa(dippi23);
-     * Liike dippi51 = new Liike(); liikkeet.lisaa(dippi51);
+     * Liike dippi21 = new Liike(2); liikkeet.lisaa(dippi21);
+     * Liike dippi11 = new Liike(1); liikkeet.lisaa(dippi11);
+     * Liike dippi22 = new Liike(2); liikkeet.lisaa(dippi22);
+     * Liike dippi12 = new Liike(1); liikkeet.lisaa(dippi12);
+     * Liike dippi23 = new Liike(2); liikkeet.lisaa(dippi23);
+     * Liike dippi51 = new Liike(5); liikkeet.lisaa(dippi51);
      * List<Liike> loytyneet;
      * loytyneet = liikkeet.annaLiikkeet(3);
      * loytyneet.size() === 0; 
@@ -186,7 +186,7 @@ public class Liikkeet implements Iterable<Liike> {
     public List<Liike> annaLiikkeet(int treeninro) {
         List<Liike> loydetyt = new ArrayList<Liike>();
         for (Liike liike : alkiot)
-            if (liike.getTreeniNro() == treeninro) loydetyt.add(liike);
+            if (liike.getLiikeNro() == treeninro) loydetyt.add(liike);
         return loydetyt;
     }
     

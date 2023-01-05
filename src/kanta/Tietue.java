@@ -39,10 +39,6 @@ public interface Tietue {
     public abstract String anna(int k);
     
     
-    /**
-     * @throws SailoException a
-     */
-    public abstract void tallenna() throws SailoException;
     
     /**
      * @param k a 

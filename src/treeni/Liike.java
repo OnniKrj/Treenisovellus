@@ -34,14 +34,6 @@ public class Liike implements Cloneable, Tietue {
         if ( treeniNro >= seuraavaNro ) seuraavaNro = treeniNro + 1;
     }
     
-    /**
-     * Seuraava liikenumero on aina tämänhetkistä suurempi
-     * @param lnr Asetettava liikenumero / id
-     */
-    private void setLiikeNro(int lnr) {
-        liikeNro = lnr;
-        if (liikeNro >= seuraavaNro) seuraavaNro = liikeNro + 1;
-    }
     
     /**
      * Alustetaan liike tyhjäksi
@@ -51,10 +43,10 @@ public class Liike implements Cloneable, Tietue {
     }
     
     /**
-     * @param treeniNro treenin viitenumero
+     * @param liikeNro treenin viitenumero
      */
-    public Liike(int treeniNro) {
-        this.treeniNro = treeniNro;
+    public Liike(int liikeNro) {
+        this.liikeNro = liikeNro;
     }
     
     /**
@@ -112,7 +104,7 @@ public class Liike implements Cloneable, Tietue {
      */
     @Override
     public int getKenttia() {
-        return 4;
+        return 6;
     }
 
     
@@ -122,7 +114,7 @@ public class Liike implements Cloneable, Tietue {
      */
     @Override
     public int ekaKentta() {
-        return 0;
+        return 2;
     }
 
     
@@ -134,10 +126,12 @@ public class Liike implements Cloneable, Tietue {
     @Override
     public String getKysymys(int k) {
         switch ( k ) {
-        case 0: return "Liikkeen nimi";
-        case 1: return "Sarjat";
-        case 2: return "Toistot";
-        case 3: return "Paino";
+        case 0: return "treeni id";
+        case 1: return "liike id";
+        case 2: return "Liikkeen nimi";
+        case 3: return "Sarjat";
+        case 4: return "Toistot";
+        case 5: return "Paino";
         default: return "Asd";
 
         }
@@ -152,10 +146,12 @@ public class Liike implements Cloneable, Tietue {
     @Override
     public String anna(int k) {
         switch ( k ) {
-        case 0: return "" + liikeNimi;
-        case 1: return "" + sarjaMaara;
-        case 2: return "" + toistoMaara;
-        case 3: return "" + paino;
+        case 0: return "" + treeniNro;
+        case 1: return "" + liikeNro;
+        case 2: return "" + liikeNimi;
+        case 3: return "" + sarjaMaara;
+        case 4: return "" + toistoMaara;
+        case 5: return "" + paino;
         default: return "Asd";
 
         }
@@ -201,13 +197,10 @@ public class Liike implements Cloneable, Tietue {
      * </pre>
      */
     public void parse(String rivi) {
-        var sb = new StringBuilder(rivi);
-        setTreeniNro(Mjonot.erota(sb, '|', getTreeniNro()));
-        setLiikeNro(Mjonot.erota(sb, '|', getLiikeNro()));
-        liikeNimi = Mjonot.erota(sb, '|', liikeNimi);
-        sarjaMaara = Mjonot.erota(sb, '|', sarjaMaara);
-        toistoMaara = Mjonot.erota(sb, '|', toistoMaara);
-        paino = Mjonot.erota(sb, '|', paino);
+        StringBuffer sb = new StringBuffer(rivi);
+        for (int k = 0; k < getKenttia(); k++)
+            aseta(k, Mjonot.erota(sb, '|'));
+
         
     }
     
@@ -223,13 +216,15 @@ public class Liike implements Cloneable, Tietue {
      */
     @Override
     public String toString() {
-        return "" +
-                getTreeniNro() + "|" +
-                getLiikeNro() + "|" +
-                liikeNimi + "|" +
-                sarjaMaara + "|" +
-                toistoMaara + "|" +
-                paino;
+        StringBuffer sb = new StringBuffer("");
+        String erotin = "";
+        for (int k = 0; k < getKenttia(); k++) {
+            sb.append(erotin);
+            sb.append(anna(k));
+            erotin = "|";
+        }
+        return sb.toString();
+
     }
     
     
@@ -249,16 +244,16 @@ public class Liike implements Cloneable, Tietue {
      * </pre>
      */
     public int kirjaa() {
-        this.liikeNro = seuraavaNro;
+        treeniNro = seuraavaNro;
         seuraavaNro++;
-        return this.liikeNro;
+        return treeniNro;
     }
     
     /**
      * @param out Tulostettava tietovirta
      */
     public void tulosta(PrintStream out) {
-        out.println("id " + liikeNro + " " + liikeNimi + " Sarjat " + sarjaMaara + " Toistot " + toistoMaara + " Paino " + paino);
+        out.println(liikeNimi + " Sarjat " + sarjaMaara + " Toistot " + toistoMaara + " Paino " + paino);
         
     }
     
@@ -286,15 +281,21 @@ public class Liike implements Cloneable, Tietue {
         StringBuffer sb = new StringBuffer(st);
         switch (k) {
         case 0:
-            liikeNimi = Mjonot.erota(sb, '§', getLiikeNimi());
+            setTreeniNro(Mjonot.erota(sb, '$', getTreeniNro()));
             return null;
         case 1:
-            sarjaMaara = Mjonot.erota(sb, '§', getSarjaMaara());
+            liikeNro = Mjonot.erota(sb, '$', liikeNro);
             return null;
         case 2:
-            toistoMaara = Mjonot.erota(sb, '§', getToistoMaara());
+            liikeNimi = Mjonot.erota(sb, '§', getLiikeNimi());
             return null;
         case 3:
+            sarjaMaara = Mjonot.erota(sb, '§', getSarjaMaara());
+            return null;
+        case 4:
+            toistoMaara = Mjonot.erota(sb, '§', getToistoMaara());
+            return null;
+        case 5:
             paino = Mjonot.erota(sb, '§', getPaino());
             return null;
             
@@ -304,9 +305,4 @@ public class Liike implements Cloneable, Tietue {
 
     }
 
-    @Override
-    public void tallenna() throws SailoException {
-        // TODO Auto-generated method stub
-        
-    }
 }
