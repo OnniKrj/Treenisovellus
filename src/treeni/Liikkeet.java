@@ -197,7 +197,36 @@ public class Liikkeet implements Iterable<Liike> {
      * @throws SailoException Virheilmoitus jos lukeminen epäonnistuu
      * @example
      * <pre name="test">
-     * 
+     * #THROWS SailoException
+     * #import java.io.File;
+     * Liikkeet liikkeet = new Liikkeet();
+     * Liike dippi21 = new Liike(); dippi21.TaytaLiikeTiedoilla(2);
+     * Liike dippi11 = new Liike(); dippi11.TaytaLiikeTiedoilla(1);
+     * Liike dippi22 = new Liike(); dippi22.TaytaLiikeTiedoilla(2); 
+     * Liike dippi12 = new Liike(); dippi12.TaytaLiikeTiedoilla(1); 
+     * Liike dippi23 = new Liike(); dippi23.TaytaLiikeTiedoilla(2); 
+     * String tiedNimi = "treeni";
+     * File ftied = new File(tiedNimi + "/liikkeet.dat");
+     * ftied.delete();
+     * liikkeet.lueTiedostosta(tiedNimi); #THROWS SailoException
+     * liikkeet.lisaa(dippi21);
+     * liikkeet.lisaa(dippi11);
+     * liikkeet.lisaa(dippi22);
+     * liikkeet.lisaa(dippi12);
+     * liikkeet.lisaa(dippi23);
+     * liikkeet.tallenna(tiedNimi);
+     * liikkeet = new Liikkeet();
+     * liikkeet.lueTiedostosta(tiedNimi);
+     * Iterator<Liike> i = liikkeet.iterator();
+     * i.next().toString() === dippi21.toString();
+     * i.next().toString() === dippi11.toString();
+     * i.next().toString() === dippi22.toString();
+     * i.next().toString() === dippi12.toString();
+     * i.next().toString() === dippi23.toString();
+     * i.hasNext() === false;
+     * liikkeet.lisaa(dippi23);
+     * liikkeet.tallenna(tiedNimi);
+     * ftied.delete() === true;
      * </pre>
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
@@ -206,7 +235,7 @@ public class Liikkeet implements Iterable<Liike> {
         
         try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
             while (fi.hasNext()) {
-                String s = fi.nextLine();
+                String s = fi.nextLine().trim();
                 if (s == null || s.equals("") || s.charAt(0) == ';') continue;
                 Liike liike = new Liike();
                 liike.parse(s);
@@ -223,8 +252,9 @@ public class Liikkeet implements Iterable<Liike> {
      * @param hakemisto Tallennettavan tiedoston hakemisto
      * @throws SailoException Jos tallennus epäonnistuu
      * @example
-     * <pre name="test">
-     * 
+     * <pre>
+     * 1|2|Penkkipunnerrus|3|8|35
+     * 2|3|Kyykky|3|6|80
      * </pre>
      */
     public void tallenna(String hakemisto) throws SailoException {
@@ -294,11 +324,36 @@ public class Liikkeet implements Iterable<Liike> {
     }
     
     /**
-
+     * @return liikeiteraattori
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * Liikkeet liikkeet = new Liikkeet();
+     * Liike dippi21 = new Liike(2); liikkeet.lisaa(dippi21);
+     * Liike dippi11 = new Liike(1); liikkeet.lisaa(dippi11);
+     * Liike dippi22 = new Liike(2); liikkeet.lisaa(dippi22);
+     * Liike dippi12 = new Liike(1); liikkeet.lisaa(dippi12);
+     * Liike dippi23 = new Liike(2); liikkeet.lisaa(dippi23);
+     * Iterator<Liike> i2 = liikkeet.iterator();
+     * i2.next() === dippi21;
+     * i2.next() === dippi11;
+     * i2.next() === dippi22;
+     * i2.next() === dippi12;
+     * i2.next() === dippi23;
+     * i2.next() === dippi12;  #THROWS NoSuchElementException
+     * 
+     * int n = 0;
+     * int jnrot[] = {2,1,2,1,2};
+     * 
+     * for (Liike liik : liikkeet) {
+     *  liik.getLiikeNro() === jnrot[n]; n++;
+     * }
+     * 
+     * n === 5;
+     * </pre>
      */
     @Override
     public Iterator<Liike> iterator() {
-        // TODO Auto-generated method stub
         return alkiot.iterator();
     }
 }

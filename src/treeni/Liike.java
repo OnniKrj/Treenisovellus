@@ -170,7 +170,7 @@ public class Liike implements Cloneable, Tietue {
     public void TaytaLiikeTiedoilla(int nro) {
         treeniNro = nro;
         liikeNimi = "Pystypunnerrus";
-        liikeNro = 2; // TODO: Kytköksiä muualle?? Oli unohtunut lisätä aikasemmassa vaiheessa tähän
+        liikeNro = nro; // TODO: Kytköksiä muualle?? Oli unohtunut lisätä aikasemmassa vaiheessa tähän
         sarjaMaara = 3;
         toistoMaara = 8;
         paino = 70;
