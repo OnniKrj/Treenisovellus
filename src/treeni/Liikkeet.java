@@ -235,7 +235,7 @@ public class Liikkeet implements Iterable<Liike> {
         
         try (Scanner fi = new Scanner(new FileInputStream(ftied))) {
             while (fi.hasNext()) {
-                String s = fi.nextLine().trim();
+                String s = fi.nextLine();
                 if (s == null || s.equals("") || s.charAt(0) == ';') continue;
                 Liike liike = new Liike();
                 liike.parse(s);

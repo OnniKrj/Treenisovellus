@@ -142,6 +142,13 @@ public class Liike implements Cloneable, Tietue {
      * Antaa k:n kentän sisällön merkkijonona
      * @param k monenenko kentän sisältö palautetaan
      * @return kentän sisältö merkkijonona
+     * @example
+     * <pre name="test">
+     * Liike liik = new Liike();
+     * liik.parse("  1  |  2  | Pystypunnerrus  |  3  |  8  |  30  ");
+     * liik.anna(0) === "1";
+     * liik.anna(1) === "2";
+     * </pre>
      */
     @Override
     public String anna(int k) {
@@ -158,6 +165,20 @@ public class Liike implements Cloneable, Tietue {
 
     }
     
+    
+    /**
+     * @return Kloonattu liike
+     * @example
+     * <pre name="test">
+     * #THROWS CloneNotSupportedException
+     * Liike liike = new Liike();
+     * liike.parse("  1  |  2  | Pystypunnerrus  |  3  |  8  |  30  ");
+     * Liike kopio = liike.clone();
+     * kopio.toString() === liike.toString();
+     * liike.parse("  2  |  12  | Kyykky  |  3  |  6  |  80  ");
+     * kopio.toString().equals(liike.toString()) === false;
+     * </pre>
+     */
     @Override
     public Liike clone() throws CloneNotSupportedException {
         return (Liike)super.clone();
@@ -184,16 +205,16 @@ public class Liike implements Cloneable, Tietue {
      * @example
      * @example
      * <pre name="test">
-     *  Suoritus suoritus = new Suoritus();
-     *  suoritus.parse(" 3 |  1  |  3");
-     *  suoritus.getTreeniNro() === 3;
-     *  suoritus.toString().startsWith("3|1|3|") === true;
-     *  
-     *  suoritus.kirjaa();
-     *  int n = suoritus.getTreeniNro();
-     *  suoritus.parse(""+(n+20));
-     *  suoritus.kirjaa();
-     *  suoritus.getTreeniNro() === n+20+1;
+     *  Liike liike = new Liike();
+     *  liike.parse("  1  |  2  | Pystypunnerrus  |  3  |  8  |  30  ");
+     *  liike.getLiikeNro() === 2;
+     *  liike.toString() === "1|2|Pystypunnerrus|3|8|30.0";
+     *  liike.kirjaa();
+     *  int n = liike.getTreeniNro();
+     *  liike.parse(""+(n+20));
+     *  liike.kirjaa();
+     *  liike.getTreeniNro() === n+20+1;
+     *  liike.toString() === "" + (n+20+1) + "|2|Pystypunnerrus|3|8|30.0";
      * </pre>
      */
     public void parse(String rivi) {
@@ -209,9 +230,9 @@ public class Liike implements Cloneable, Tietue {
      * @return Suorituksen tiedot merkkijonona
      * @example
      * <pre name="test">
-     * Suoritus suoritus = new Suoritus();
-     * suoritus.parse(" 3 |  1  |  3");
-     * suoritus.toString().startsWith("3|1|3|") === true;
+     * Liike liike = new Liike();
+     * liike.parse("  1  |  2  | Pystypunnerrus  |  3  |  8  |  30  ");
+     * liike.toString() === "1|2|Pystypunnerrus|3|8|30.0";
      * </pre>
      */
     @Override
@@ -230,16 +251,16 @@ public class Liike implements Cloneable, Tietue {
     
     
     /**
-     * @return Täytetään
+     * @return Antaa liikkeelle seuraavan
      * 
      * <pre name="test">
      * Liike liike1 = new Liike();
-     * liike1.getLiikeNro() === 0;
+     * liike1.getTreeniNro() === 0;
      * liike1.kirjaa();
      * Liike liike2 = new Liike();
      * liike2.kirjaa();
-     * int n1 = liike1.getLiikeNro();
-     * int n2 = liike2.getLiikeNro();
+     * int n1 = liike1.getTreeniNro();
+     * int n2 = liike2.getTreeniNro();
      * n1 === n2 - 1;
      * </pre>
      */
@@ -275,6 +296,18 @@ public class Liike implements Cloneable, Tietue {
         
     }
 
+    /**
+     * Asetetaan valitun kentän sisältö. Jos asettaminen onnistuu,
+     * palautetaan null.
+     * @param k Minkä kentän sisältö asetetaan
+     * @param s Asetettava sisältö merkkijonona
+     * @example
+     * <pre name="test">
+     * Liike liike = new Liike();
+     * liike.aseta(2, "Dippi") === null;
+     * liike.aseta(5, "30") === null;
+     * </pre>
+     */
     @Override
     public String aseta(int k, String s) {
         String st = s.trim();
