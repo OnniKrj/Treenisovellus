@@ -10,7 +10,7 @@ import org.junit.platform.suite.api.Suite;
  */
 @Suite
 @SelectClasses({ LiikeTest.class, LiikkeetTest.class, SuorituksetTest.class,
-        SuoritusTest.class })
+        SuoritusTest.class, TreeniTest.class })
 public class AllTests {
     //
 }

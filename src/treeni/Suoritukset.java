@@ -74,6 +74,28 @@ public class Suoritukset implements Iterable<Suoritus>{
      * 
      * @param suoritus Lisättävän suorituksen viite
      * @throws SailoException Virhe, jos tietorakenne on jo täynnä
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException, CloneNotSupportedException
+     * #PACKAGEIMPORT
+     * #import java.util.*;
+     * Suoritukset suoritukset = new Suoritukset();
+     * Suoritus treeni1 = new Suoritus(), treeni2 = new Suoritus();
+     * treeni1.kirjaa(); treeni2.kirjaa();
+     * suoritukset.getLkm() === 0;
+     * suoritukset.korvaaTaiLisaa(treeni1); suoritukset.getLkm() === 1;
+     * suoritukset.korvaaTaiLisaa(treeni2); suoritukset.getLkm() === 2;
+     * Suoritus treeni3 = treeni1.clone();
+     * treeni3.taytaTreeniTiedoilla();
+     * Iterator<Suoritus> it = suoritukset.iterator();
+     * it.next() == treeni1 === true;
+     * suoritukset.korvaaTaiLisaa(treeni3); suoritukset.getLkm() === 2;
+     * it = suoritukset.iterator();
+     * Suoritus treeni0 = it.next();
+     * treeni0 === treeni3;
+     * treeni0 == treeni3 === true;
+     * treeni0 == treeni1 === false;
+     * </pre>
      */
     public void korvaaTaiLisaa(Suoritus suoritus) throws SailoException {
         int id = suoritus.getTreeniNro();
@@ -135,8 +157,14 @@ public class Suoritukset implements Iterable<Suoritus>{
     
     
     /**
+     * Tallentaa suorituksen tiedostoon
      * @param hakemisto Tallennettavan tiedoston hakemisto
      * @throws SailoException Jos tallennus epäonnistuu
+     * @example
+     * <pre>
+     * 1|1.1.2023
+     * 2|3.1.2023
+     * </pre>
      */
     public void tallenna(String hakemisto) throws SailoException {
         if (!muutettu) return;
@@ -157,7 +185,7 @@ public class Suoritukset implements Iterable<Suoritus>{
     /**
      * @param hakuehto Hakutermi
      * @param k indeksi
-     * @return L asd
+     * @return Löytyneet
      */
     public Collection<Suoritus> etsi(String hakuehto, int k) {
         String ehto = "*";
@@ -290,25 +318,5 @@ public class Suoritukset implements Iterable<Suoritus>{
         return new SuorituksetIterator();
     }
     
-
-     
-    /**
-     * @param hakuehto Hakuehto
-     * @param k Etsittävän kentän indeksi
-     * @return Tietorakenne löytyneistä suorituksista
-     */
-    /*
-    @SuppressWarnings("unused")
-    public Collection<Suoritus> etsi(String hakuehto, int k) { 
-        Collection<Suoritus> loytyneet = new ArrayList<Suoritus>(); 
-        for (Suoritus suoritus : this) { 
-            loytyneet.add(suoritus);  
-        } 
-        return loytyneet; 
-    }
-    */
-
-
-
 
 }

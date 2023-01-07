@@ -102,6 +102,30 @@ public class Treeni {
      * @param suoritus Suoritus jolle suorituksia haetaan
      * @return Tietorakenne, jossa viitteet löydettyihin suorituksiin
      * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * Treeni treeni = new Treeni();
+     * Suoritus suoritus1 = new Suoritus(), suoritus2 = new Suoritus(), suoritus3 = new Suoritus();
+     * suoritus1.kirjaa(); suoritus2.kirjaa(); suoritus3.kirjaa();
+     * int id1 = suoritus1.getTreeniNro();
+     * int id2 = suoritus2.getTreeniNro();
+     * Liike dippi11 = new Liike(id1); treeni.lisaa(dippi11);
+     * Liike dippi12 = new Liike(id1); treeni.lisaa(dippi12);
+     * Liike dippi21 = new Liike(id2); treeni.lisaa(dippi21);
+     * Liike dippi22 = new Liike(id2); treeni.lisaa(dippi22);
+     * Liike dippi23 = new Liike(id2); treeni.lisaa(dippi23);
+     * 
+     * List<Liike> loytyneet;
+     * loytyneet = treeni.annaLiikkeet(suoritus3);
+     * loytyneet.size() === 0; 
+     * loytyneet = treeni.annaLiikkeet(suoritus1);
+     * loytyneet.size() === 2; 
+     * loytyneet.get(0) == dippi11 === true;
+     * loytyneet.get(1) == dippi12 === true;
+     * loytyneet = treeni.annaLiikkeet(suoritus2);
+     * loytyneet.size() === 3; 
+     * loytyneet.get(0) == dippi21 === true;
+     * </pre>
      */
     public List<Liike> annaLiikkeet(Suoritus suoritus) {
         return liikkeet.annaLiikkeet(suoritus.getTreeniNro());
