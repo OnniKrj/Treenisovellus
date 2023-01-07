@@ -114,6 +114,12 @@ public class Suoritus implements Cloneable, Tietue {
     
     /**
      * @return P‰iv‰ys
+     * @example
+     * <pre name="test">
+     * Suoritus suoritus = new Suoritus();
+     * suoritus.taytaTreeniTiedoilla();
+     * suoritus.getPvm() =R= "1.10.2022";
+     * </pre>
      */
     public String getPvm() {
         return pvm;
@@ -127,6 +133,11 @@ public class Suoritus implements Cloneable, Tietue {
      * @param k Kuinka monennes kentt‰
      * @param jono Asetetaan kent‰n arvoksi
      * @return null jos asettaminen onnistuu, muuten virhe
+     * @example
+     * <pre name="test">
+     * Suoritus suoritus = new Suoritus();
+     * suoritus.aseta(1, "1.1.2023") === null;
+     * </pre>
      */
     @Override
     public String aseta(int k, String jono) {
@@ -229,8 +240,8 @@ public class Suoritus implements Cloneable, Tietue {
      * @example
      * <pre name="test">
      * Suoritus suoritus = new Suoritus();
-     * suoritus.parse(" 3 |  1  |  3");
-     * suoritus.toString().startsWith("3|1|3|") === true;
+     * suoritus.parse("  1  |  1.10.2022");
+     * suoritus.toString().startsWith("1|1.10.2022") === true;
      * </pre>
      */
     @Override
@@ -251,9 +262,9 @@ public class Suoritus implements Cloneable, Tietue {
      * @example
      * <pre name="test">
      *  Suoritus suoritus = new Suoritus();
-     *  suoritus.parse(" 3 |  1  |  3");
+     *  suoritus.parse(" 3 |  1.10.2023  ");
      *  suoritus.getTreeniNro() === 3;
-     *  suoritus.toString().startsWith("3|1|3|") === true;
+     *  suoritus.toString().startsWith("3|1.10.2023") === true;
      *  
      *  suoritus.kirjaa();
      *  int n = suoritus.getTreeniNro();
@@ -268,6 +279,22 @@ public class Suoritus implements Cloneable, Tietue {
             aseta(k, Mjonot.erota(sb, '|'));
     }
     
+    
+    
+    /**
+     * Tehd‰‰n klooni suorituksesta
+     * @return Kloonattu suoritus
+     * @example
+     * <pre name="test">
+     * #THROWS CloneNotSupportedException
+     * Suoritus suoritus = new Suoritus();
+     * suoritus.parse("1  |  1.10.2023  ");
+     * Suoritus kopio = suoritus.clone();
+     * kopio.toString() === suoritus.toString();
+     * suoritus.parse("2  |  2.10.2023");
+     * kopio.toString().equals(suoritus.toString()) === false;
+     * </pre>
+     */
     @Override
     public Suoritus clone() throws CloneNotSupportedException {
         Suoritus uusi;
