@@ -203,7 +203,6 @@ public class Liike implements Cloneable, Tietue {
     /**
      * @param rivi Rivi jolta tiedot otetaan
      * @example
-     * @example
      * <pre name="test">
      *  Liike liike = new Liike();
      *  liike.parse("  1  |  2  | Pystypunnerrus  |  3  |  8  |  30  ");

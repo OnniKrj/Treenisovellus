@@ -80,7 +80,7 @@ public class Suoritus implements Cloneable, Tietue {
      */
     @Override
     public int getKenttia() {
-        return 1;
+        return 2;
     }
 
     
@@ -90,7 +90,7 @@ public class Suoritus implements Cloneable, Tietue {
      */
     @Override
     public int ekaKentta() {
-        return 0;
+        return 1;
     }
 
     
@@ -102,7 +102,8 @@ public class Suoritus implements Cloneable, Tietue {
     @Override
     public String getKysymys(int k) {
         switch ( k ) {
-        case 0: return "Päivämäärä";
+        case 0: return "treeninro";
+        case 1: return "Päivämäärä";
         
         default: return "Asd";
 
@@ -110,52 +111,6 @@ public class Suoritus implements Cloneable, Tietue {
     }
     
     
-    /**
-     * Antaa k:n kentän sisällön merkkijonona
-     * @param k monenenko kentän sisältö palautetaan
-     * @return kentän sisältö merkkijonona
-     */
-    @Override
-    public String anna(int k) {
-        switch ( k ) {
-        case 0: return "" + pvm;
-        
-        default: return "Asd";
-
-        }
-
-    }
-
-    
-    
-    /**
-     * @return Suorituksen liikenro
-     */
-    /*public int getLiikeNro() {
-        return liikeNro;
-    }
-    
-    /**
-     * @return Suorituksen sarjamaara
-     */
-    /*public int getSarjaMaara() {
-        return sarjaMaara;
-    }
-    
-    
-    /**
-     * @return Suorituksen toistomäärä
-     */
-    /*public int getToistoMaara() {
-        return toistoMaara;
-    }
-    
-    /**
-     * @return Suorituksen paino kiloina
-     */
-    /*public double getPaino() {
-        return paino;
-    }
     
     /**
      * @return Päiväys
@@ -176,19 +131,38 @@ public class Suoritus implements Cloneable, Tietue {
     @Override
     public String aseta(int k, String jono) {
         String tjono = jono.trim();
+        StringBuffer sb = new StringBuffer(tjono);
         switch (k) {
         case 0:
+            setTreeniNro(Mjonot.erota(sb, '§', getTreeniNro()));
+            return null;
+        case 1:
             String virhe = pvmt.tarkista(jono);
             if (virhe != null) return virhe;
             pvm = tjono;
             return null;
-
-
-            
         default:
             break;
         }
         return null;
+    }
+    
+    
+    /**
+     * Antaa k:n kentän sisällön merkkijonona
+     * @param k monenenko kentän sisältö palautetaan
+     * @return kentän sisältö merkkijonona
+     */
+    @Override
+    public String anna(int k) {
+        switch ( k ) {
+        case 0: return "" + treeniNro;
+        case 1: return "" + pvm;
+        
+        default: return "Asd";
+
+        }
+
     }
     
     
@@ -261,13 +235,14 @@ public class Suoritus implements Cloneable, Tietue {
      */
     @Override
     public String toString() {
-        return "" +
-                getTreeniNro() + "|" +
-                //liikeNro + "|" +
-                //sarjaMaara + "|" +
-                //toistoMaara + "|" +
-                //paino + "|" +
-                pvm;
+        StringBuffer sb = new StringBuffer("");
+        String erotin = "";
+        for (int k = 0; k < getKenttia(); k++) {
+            sb.append(erotin);
+            sb.append(anna(k));
+            erotin = "|";
+        }
+        return sb.toString();
     }
     
     /**
@@ -288,12 +263,9 @@ public class Suoritus implements Cloneable, Tietue {
      * </pre>
      */
     public void parse(String rivi) {
-        var sb = new StringBuilder(rivi);
-        setTreeniNro(Mjonot.erota(sb, '|', getTreeniNro()));
-        //liikeNro = Mjonot.erota(sb, '|', liikeNro);
-        //sarjaMaara = Mjonot.erota(sb, '|', sarjaMaara);
-        //toistoMaara = Mjonot.erota(sb, '|', toistoMaara);
-        pvm = Mjonot.erota(sb, '|', pvm);
+        StringBuffer sb = new StringBuffer(rivi);
+        for (int k = 0; k < getKenttia(); k++)
+            aseta(k, Mjonot.erota(sb, '|'));
     }
     
     @Override
